@@ -1,11 +1,18 @@
 var express = require('express');
 
-var app = require('./server/server-config.js');
-
+//var app = require('./server/server-config.js');
+var app = express();
 var port = process.env.PORT || 8000;
+var passport = require('passport');
+var flash = require('connect-flash');
+var morgan = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var session = require('express-session');
+
 
 //set /client/dist to static root
-app.use(express.static(__dirname + '/client/dist'));
+// app.use(express.static(__dirname + '/client/dist'));
 
 //Attempt to automatically reroute to landing page
 //client side routing may work better for this
@@ -15,9 +22,32 @@ app.use(express.static(__dirname + '/client/dist'));
 // });
 
 //set app page to /app instead of root /
-app.get('/app', function(req, res){
-	res.sendFile(__dirname + '/client/dist/index.html');
-});
+// app.get('/app', function(req, res){
+// 	res.sendFile(__dirname + '/client/dist/index.html');
+// });
+
+
+
+//pass passport for configuration
+//require('./config/passport')(passport); 
+
+//set up our express application
+app.use(morgan('dev')); //log every request to the console
+app.use(cookieParser()); //read cookies (needed for auth)
+app.use(bodyParser()); //get information from html forms
+
+//required for passport
+//session secret
+app.use(session({secret: 'teamdubioustarantula'}));
+
+app.use(passport.initialize());
+app.use(passport.session()); //persistent login sessions
+app.use(flash()); //use connect-flash for flash messages stored in session
+
+//routes
+//load our routes and pass in our app and fully configured passport
+require('./server/routes/userRoutes.js')(app, passport);
+
 
 app.listen(port);
 
