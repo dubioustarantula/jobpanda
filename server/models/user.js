@@ -1,9 +1,8 @@
 /*================ REQUIRE DEPENDENCIES ================*/
-var db 				  = require('../config/config'),
-    ListingUser = require('./job_user'),
-    bcrypt      = require('bcrypt'),
-    Promise     = require('bluebird'),
-    Listings 	  = require('./listing');
+var db 				= require('../config/config'),
+    JobUser   = require('./job_user'),
+    bcrypt    = require('bcrypt-nodejs'),
+    Listings 	= require('./listing');
 
 /*============== SET SCHEMA RELATIONSHIPS ==============*/
 var User = db.Model.extend({
@@ -12,13 +11,29 @@ var User = db.Model.extend({
 	initialize: function(){
     this.on('creating', this.generateHash);
   },
-  comparePassword: function(attemptedPassword, callback) {
-    bcrypt.compare(attemptedPassword, this.get('password'), function(err, isMatch) {
+  validPassword: function(attemptedPassword, callback) {
+    bcrypt.compareSync(attemptedPassword, this.get('password'), function(err, isMatch) {
       callback(isMatch);
     });
   },
-  generateHash: function(){
-    return bcrypt.hashSync(this.get('password'), bcrypt.genSaltSync(8), null);
+
+  // generateHash: function(){
+  //   return bcrypt.hashSync(this.get('password'), bcrypt.genSaltSync(8), null);
+  /* FROM JOBPANDA
+  hashPassword: function(){
+    var cipher = Promise.promisify(bcrypt.hash);
+    // return a promise - bookshelf will wait for the promise
+    // to resolve before completing the create action
+    return cipher(this.get('password'), null, null)
+      .bind(this)
+      .then(function(hash) {
+        this.set('password', hash);
+      });
+>>>>>>> (refactor) Refactor code in user.js to not uses Promises
+  },
+  */
+  generateHash: function(password) {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
   },
 	listings: function(){
 		return this.belongsToMany(Listings).through(ListingUser);
