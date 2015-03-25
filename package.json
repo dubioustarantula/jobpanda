@@ -40,6 +40,7 @@
     "gulp-streamify": "0.0.5",
     "gulp-uglify": "^1.1.0",
     "gulp-util": "^3.0.4",
+    "harmonize": "^1.4.1",
     "knex": "^0.7.5",
     "material-design-icons": "^1.0.1",
     "material-ui": "^0.7.1",
@@ -58,7 +59,6 @@
     "watchify": "^2.4.0"
   },
   "devDependencies": {
-    "harmonize": "^1.4.1",
     "jest-cli": "^0.4.0",
     "react-tools": "^0.13.1"
   }
