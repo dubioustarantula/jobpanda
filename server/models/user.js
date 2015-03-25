@@ -1,8 +1,9 @@
 /*================ REQUIRE DEPENDENCIES ================*/
-var db 				= require('../config/config'),
-    JobUser   = require('./job_user'),
-    bcrypt    = require('bcrypt-nodejs'),
-    Listing 	= require('./listing');
+var db 				  = require('../config/config'),
+    ListingUser = require('./job_user'),
+    bcrypt      = require('bcrypt-nodejs'),
+    Promise     = require('bluebird'),
+    Listings 	  = require('./listing');
 
 /*============== SET SCHEMA RELATIONSHIPS ==============*/
 var User = db.Model.extend({
@@ -32,7 +33,7 @@ var User = db.Model.extend({
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
   },
 	listings: function(){
-		return this.belongsToMany(Listing).through(JobUser);
+		return this.belongsToMany(Listings).through(ListingUser);
 	}
 });
 
