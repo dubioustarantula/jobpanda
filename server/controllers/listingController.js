@@ -82,7 +82,7 @@ module.exports = {
 		//set object for adding params to bookshelf model
 		var params = {};
 		//find user db entry (mock user data)
-		var username = "tester";
+		var username = username || "guest";
 		var newUser = new User({user_name: username});
 		newUser.fetch().then(function(user){
 			if (user){
