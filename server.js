@@ -29,7 +29,7 @@ var session = require('express-session');
 
 
 //pass passport for configuration
-//require('./config/passport')(passport); 
+require('../server/config/passport.js')(passport); 
 
 //set up our express application
 app.use(morgan('dev')); //log every request to the console
