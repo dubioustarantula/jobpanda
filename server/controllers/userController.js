@@ -22,7 +22,7 @@ module.exports = {
 	},
 
 	login: function(req, res, next){
-		var username = req.body.username;
+	  var username = req.body.username;
 	  var password = req.body.password;
 
 	  new User({username: username}).fetch().then(function(user){
