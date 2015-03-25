@@ -9,7 +9,6 @@ var streamify = require('gulp-streamify');
 var server = require('gulp-server-livereload');
 var less = require('gulp-less');
 var jest = require('gulp-jest');
-
 require('harmonize')();
 
 var path = {
