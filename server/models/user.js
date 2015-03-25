@@ -1,8 +1,7 @@
 /*================ REQUIRE DEPENDENCIES ================*/
 var db 				= require('../config/config'),
     JobUser   = require('./job_user'),
-    bcrypt    = require('bcrypt'),
-    Promise   = require('bluebird'),
+    bcrypt    = require('bcrypt-nodejs'),
     Listing 	= require('./listing');
 
 /*============== SET SCHEMA RELATIONSHIPS ==============*/
@@ -12,11 +11,12 @@ var User = db.Model.extend({
 	initialize: function(){
     this.on('creating', this.hashPassword);
   },
-  comparePassword: function(attemptedPassword, callback) {
-    bcrypt.compare(attemptedPassword, this.get('password'), function(err, isMatch) {
+  validPassword: function(attemptedPassword, callback) {
+    bcrypt.compareSync(attemptedPassword, this.get('password'), function(err, isMatch) {
       callback(isMatch);
     });
   },
+  /* FROM JOBPANDA
   hashPassword: function(){
     var cipher = Promise.promisify(bcrypt.hash);
     // return a promise - bookshelf will wait for the promise
@@ -26,6 +26,10 @@ var User = db.Model.extend({
       .then(function(hash) {
         this.set('password', hash);
       });
+  },
+  */
+  generateHash: function(password) {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
   },
 	listings: function(){
 		return this.belongsToMany(Listing).through(JobUser);
