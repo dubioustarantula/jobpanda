@@ -1,53 +1,6 @@
-/*==================== NOT CURRENTLY IN USE ====================*/
+var userController = require('../controllers/userController.js');
 
-/*==================== REQUIRE DEPENDENCIES ====================*/
-//var userController = require('../controllers/userController.js');
-
-/*=================== SET HANDLERS TO ROUTES ===================*/
-module.exports = function (app, passport) {
-  //app.post('/signup', userController.signup);
-  //app.post('/login', userController.login);
-  //app.post('/logout', userController.logout);
-
-
-  //HOME PAGE (with login links)
-  app.get('/', function(req, res) {
-    res.render('../client/src/js/landing.html'); //load the landing page
-  });
-
-  //LOGIN
-  //show the login form
-  app.get('/login', function(req, res) {
-    //render the page and pass in any flash data if it exists
-    res.render('../client/src/js/login.html', {message: req.flash('loginMessage')}
-  });
-)};
-
-  //prrocess the login form
-  //app.post('/login', do all the passport stuff here);
-
-
-  //PROFILE SECTION
-  //we will want this protected so you have to be logged in to visit
-  //we will use route middleware to verify this (the isLoggedIn function)
-  app.get('/profile', isLoggedIn, function(req, res) {
-    res.render('../client/src/js/index.html', {
-        user: req.user //get the user out of session and pass to template
-      });
-  });
-
-  //LOGOUT
-  app.get('/logout', function(req, res) {
-    req.logout();
-    res.redirect('/');
-  });
-
-
-
-};
-
-//route middleware to make sure a user is logged in
-function isLoggedIn(req, res, next) {
+var isLoggedIn = function(req, res, next) {
   //if user is authenticated in the session, carry on
   if (req.isAuthenticated()) {
     return next();
@@ -55,7 +8,105 @@ function isLoggedIn(req, res, next) {
 
   //if they aren't redirect them to the home page
   res.redirect('/');
-}
+};
+
+
+module.exports = function(app, passport) {
+
+  //HOME PAGE
+  app.get('/', controllers.index);
+
+  //PROFILE
+  //we will want this protected so you have to be logged in to visit
+  //we will use route middleware to verify this (the isLoggedIn function)
+  app.get('/profile', isLoggedIn, function(req, res) {
+    res.render('../../client/src/js/landing.html', {
+      user: req.user //get the user out of session and pass to template
+    });
+  });
+
+  //LOG OUT
+  app.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/');
+  });
+
+  //process the signup form
+  app.post('/signup', passport.authenticate('local-signup', {
+    successRedirect : '/profile', //redirect to the secure profile section
+    failureRedirect : '/signup', //redirect back to the signup page if there is an error
+    failureFlash : true //allow flash messages
+  }));
+
+  //process the login form
+  app.post('/login', passport.authenticate('local-login', {
+    successRedirect : '/profile', //redirect to the secure profile section
+    failureRedirect : '/login', //redirect back to the signup page if there is an error
+    failureFlash : true //allow flash messages
+  }));
+
+  //LINKEDIN ROUTES
+  //route for linkedin authentication and login
+  app.get('/auth/linkedin', passport.authenticate('linkedin', {scope: 'email'}));
+
+  //handle the callback after linkedin has authenticated the user
+  app.get('/auth/linkedin/callback',
+    passport.authenticate('linkedin', {
+      successRedirect : '/profile',
+      failureRedirect : '/'
+    }));
+
+
+  //AUTHORIZE (ALREADY LOGGED IN / CONNECTING OTHER SOCIAL ACCOUNT)
+  //Linkedin
+  //send to Linkedin to do the authentication
+  app.get('/connect/linkedin', passport.authorize('linkedin', {scope: 'email'}));
+
+  //handle the callback after Linkedin has authorized the user
+  app.get('/connect/linkedin/callback',
+    passport.authorize('linkedin', {
+      successRedirect : '/profile',
+      failureRedirect : '/'
+    }));
+
+  //UNLINK ACCOUNTS
+  //used to unlink accounts; for social accounts, just remove the token
+  //for local account, remove email and password
+  //user account will stay active in case they want to reconnect in the future
+
+  //linkedin
+  app.get('/unlink/linkedin', function(req, res) {
+    var user = req.user;
+    user.linkedin.token = undefined;
+    user.save(function(err) {
+      res.redirect('/profile');
+    });
+  });
+};
+
+
+
+
+
+
+
+
+
+
+
+/* FROM JOBPANDA
+
+//==================== NOT CURRENTLY IN USE ====================
+
+//==================== REQUIRE DEPENDENCIES ====================
+var userController = require('../controllers/userController.js');
+
+//=================== SET HANDLERS TO ROUTES ===================
+module.exports = function (app) {
+  app.post('/signup', userController.signup);
+  app.post('/login', userController.login);
+  app.post('/logout', userController.logout);
+};
 
 
 
@@ -114,3 +165,6 @@ function isLoggedIn(req, res, next) {
   // res.redirect('/');
   // });
   
+};
+  
+*/
