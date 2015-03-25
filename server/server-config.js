@@ -1,15 +1,15 @@
 /*==================== REQUIRE DEPENDENCIES ====================*/
-var express          = require('express'),
-    session          = require('express-session'),
-    bodyParser       = require('body-parser'),
-    passport         = require('passport'),
+var express           = require('express'),
+    session           = require('express-session'),
+    bodyParser        = require('body-parser'),
+    passport          = require('passport'),
     // LinkedInStrategy = require('passport-linkedin').Strategy,
-    User             = require('./models/user.js'),
-    Controller       = require('./controllers/listingController.js')
-    http             = require('http');
+    User              = require('./models/user.js'),
+    ListingController = require('./controllers/listingController.js')
+    http              = require('http');
 
 /*===================== INITIALIZE EXPRESS =====================*/
-var app = express();
+var app = express();  
 
 //Allow CORS
 app.use(function(req, res, next) {
@@ -134,8 +134,8 @@ app.get('/api/users/checkbookmarklet', function(req, res, next){
 });
 
 //listing routes
-app.get('/api/listings', Controller.getListing);
-app.post('/api/listings', Controller.saveListing);
+app.get('/api/listings', ListingController.getListing);
+app.post('/api/listings', ListingController.saveListing);
 
 /*=================== SET ROUTER DEPENDENCIES ==================*/
 // Not currently in use for CORS and session compatibility
