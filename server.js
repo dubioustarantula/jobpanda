@@ -1,9 +1,8 @@
 var express = require('express');
 var app = express();
-var port = process.env.PORT || 8000;
 var passport = require('passport');
 var flash = require('connect-flash');
-
+var port = process.env.PORT || 8000;
 var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -28,7 +27,11 @@ app.use(bodyParser.json()); //get information from html forms
 app.use(bodyParser.urlencoded({extended: true}));
 
 //required for passport
-app.use(session({secret: 'teamdubioustarantula'})); //session secret
+app.use(session({
+secret: 'teamdubioustarantula',
+resave: false,
+saveUninitialized : false
+})); //session secret
 app.use(passport.initialize());
 app.use(passport.session()); //persistent login sessions
 app.use(flash()); //use connect-flash for flash messages stored in session
@@ -58,8 +61,9 @@ app.get('/app', function(req, res){
 });
 */
 
-
 //launch
+
 app.listen(port);
 
 console.log('listening on port: ' + port);
+

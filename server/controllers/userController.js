@@ -11,13 +11,13 @@ var fs = require('fs');
 
 module.exports = {
 	//Kango
-    index: function() {
+    index: function(req, res) {
         res.set('Content-Type', 'text/html');
 
-        fs.readFile(_dirname + '../../client/src/index.html', function(err, data) {
+        fs.readFile(__dirname + '/../../client/src/index.html', function(err, data) {
         	if (err) {
         		console.log('err: ' + err);
-        		res.send('<html><head/><body>empty: ' + _dirname + '</body></html>');
+        		res.send('<html><head/><body>empty: ' + __dirname + '</body></html>');
         		return;
         	}
 
@@ -39,8 +39,6 @@ module.exports = {
     		});
     	}
     },
-
-
 
 
 	signin: function(req, res, next){
@@ -72,8 +70,8 @@ module.exports = {
 	          res.redirect('/')
 	        }
 	      });
-	    };
-	  }
+	    }
+	  });
 	},
 
 	logout: function(req, res, next){

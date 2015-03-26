@@ -28,9 +28,9 @@ module.exports = function(passport) {
     //LINKEDIN SIGNUP
     passport.use(new LinkedinStrategy({
         //pull in our app id and secret from our settings.json file
-        clientID      : configAuth.linkedinAuth.clientID,
-        clientSecret  : configAuth.linkedinAuth.clientSecret,
-        callbackURL   : configAuth.twitterAuth.callbackURL,
+        consumerKey      : configAuth.linkedinAuth.consumerKey,
+        consumerSecret  : configAuth.linkedinAuth.consumerSecret,
+        callbackURL   : configAuth.linkedinAuth.callbackURL,
         passReqToCallback: true //allows us to pass in the req from our route (lets us check if a user is logged in or not)
     },
 
@@ -58,7 +58,7 @@ module.exports = function(passport) {
                     newUser.token = token; //we will save the token that linkedin provides to the user
                     newUser.first_name = profile.name.givenName;
                     newUser.last_name = profile.name.familyName; //look at the passport user profile to see how names are returned
-                    newUser.email = proifle.emails[0].value; //facebook can return multiple emails so we'll take the first
+                    newUser.email = profile.emails[0].value; //facebook can return multiple emails so we'll take the first
 
                     //save our user to the database
                     newUser.save().then(function(newUser) {
@@ -69,8 +69,7 @@ module.exports = function(passport) {
                         return done(null, newUser);
                     });
                 }
-                }
-            });
+                });
         });
     }));
 }

@@ -1,18 +1,21 @@
 //load the auth variables
-var nconf = require ('nconf');
-nconf.file('settings.json');
+var nconf = require('nconf');
+nconf.file('settings.json')
      .env();
 
-var clientID = nconf.get('clientID');
-var clientSecret = nconf.get('clientSecret');
+var consumerKey = nconf.get('consumerKey');
+var consumerSecret = nconf.get('consumerSecret');
+
 
 module.exports = {
     'linkedinAuth' : {
-        'clientID' : clientID,
-        'clientSecret' : clientSecret,
-        'callbackURL' : 'http://jpanda.herokuapp.com/auth/linkedin/callback'
+        'consumerKey' : consumerKey,
+        'consumerSecret' : consumerSecret,
+        'callbackURL' : 'http://127.0.0.1:8000/auth/linkedin/callback'
     }
 };
+
+
 
 
 

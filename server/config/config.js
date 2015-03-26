@@ -6,21 +6,35 @@
 // and letting bookshelf do most of the relationship work. 
 
 /*==================== REQUIRE DEPENDENCIES ====================*/
-var Bookshelf = require('bookshelf');
+
 var path = require('path');
 
-/*====== INITIALIZE BOOKSHELF CONNECTION TO POSTGRESS DB ======*/
-var db = Bookshelf.initialize({
-	client: 'mysql',
-	connection: {
-		host: process.env.JAWSDB_URL || 'localhost'/*Local Host for testing, ENV host for deployment*/,
-    port: process.env.JAWSDB_PORT || 8000,
-		user: process.env.JAWSDB_USER || 'root',
-		password: process.env.JAWSDB_PW || '',
-		database: process.env.JAWSDB_DB || 'jobpanda',
-		charset: 'utf8'
-	}
+
+var knex = require('knex')({
+  client: 'mysql',
+  connection: {
+    host: process.env.JAWSDB_URL || 'localhost',
+    user: process.env.JAWSDB_USER || 'root',
+    password: process.env.JAWSDB_PW || '',
+    database: process.env.JAWSDB_DB || 'jobpanda',
+    charset: 'utf8',
+  }
 });
+
+var db = require('bookshelf')(knex);
+
+/*====== INITIALIZE BOOKSHELF CONNECTION TO POSTGRESS DB ======*/
+// var db = Bookshelf.initialize({
+// 	client: 'mysql',
+// 	connection: {
+// 		host: process.env.JAWSDB_URL || 'localhost'/*Local Host for testing, ENV host for deployment*/,
+//     port: process.env.JAWSDB_PORT || 8000,
+// 		user: process.env.JAWSDB_USER || 'root',
+// 		password: process.env.JAWSDB_PW || '',
+// 		database: process.env.JAWSDB_DB || 'jobpanda',
+// 		charset: 'utf8'
+// 	}
+// });
 
 //Bookshelf has poor out-of-box support for many-to-many relationships
 //registry plug-in is needed for bookshelf defined many-to-many's

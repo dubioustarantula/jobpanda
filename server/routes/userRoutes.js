@@ -16,7 +16,6 @@ module.exports = function(app, passport) {
   //HOME PAGE
   app.get('/', userController.index);
   app.get('/login', userController.login);
-  app.get('/signup', userController.signup);
 
 
   //PROFILE
