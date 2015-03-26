@@ -21,9 +21,6 @@ var EditModal = React.createClass({
 	closeModal: function(){
 	  this.setState({modalIsOpen: false});
 	},
-	someMethod: function() {
-		return 'yeet';
-	},
 	render: function() {
 		return (
 			<Modal className="ignore-react-onclickoutside" isOpen={this.state.modalIsOpen}>
@@ -32,7 +29,7 @@ var EditModal = React.createClass({
 			    <form className="col s12">
 			      <div className="row">
 			        <div className="input-field col s6">
-			          <input id="first_name" type="text" className="validate" />
+			          <input id="first_name" type="text" className="validate">{this.props.jobDetails.title}</input>
 			          <label for="first_name">Job Title</label>
 			        </div>
 			        <div className="input-field col s6">

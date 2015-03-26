@@ -38,14 +38,10 @@ var JobListBox = React.createClass({
   componentWillUnmount: function() {
     this.unsuscribe();
   },
-  handleClick: function() {
-    console.log("butterbeans")
-  },
 
   render: function() {
     return (
       <div className="job-list-box">
-      <EditModal />
         <Paper z="1">
           <Tabs> 
             <Tab label="My Jobs"> 
