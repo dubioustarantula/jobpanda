@@ -70,7 +70,6 @@ console.log(__dirname);
 app.post('/api/users/signup', function(req, res, next){
   //create new user session and database entry if username does not already exist
   var latest = req.body;
-  console.log(latest);
   new User({user_name: req.body.username}).fetch()
     .then(function(foundUser){
       if (!foundUser){
