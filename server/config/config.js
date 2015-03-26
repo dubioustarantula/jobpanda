@@ -14,11 +14,11 @@ var path = require('path');
 var knex = require('knex')({
 	client: 'mysql',
 	connection: {
-		socket: process.env.JAWSDB_HOST || 'localhost'/*Local Host for testing, ENV host for deployment*/,
+		host: process.env.JAWSDB_HOST || 'localhost'/*Local Host for testing, ENV host for deployment*/,
 		user: process.env.JAWSDB_USER || 'root',
 		password: process.env.JAWSDB_PW || '',
-		// database: process.env.JAWSDB_DB ,//|| 'jobpanda',
-    port: process.env.JAWSDB_PORT,
+		database: 'jobpanda',
+    port: process.env.JAWSDB_PORT || 3306, //3306 is default mysql port
 		charset: 'utf8'
 	}
 });
