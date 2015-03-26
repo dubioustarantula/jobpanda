@@ -9,13 +9,8 @@ var express           = require('express'),
     http              = require('http');
 
 /*===================== INITIALIZE EXPRESS =====================*/
-<<<<<<< Updated upstream
-var app = express();  
-=======
 var app = express();
 app.use(bodyParser());
-
->>>>>>> Stashed changes
 
 //Allow CORS
 app.use(function(req, res, next) {
@@ -73,22 +68,26 @@ console.log(__dirname);
 // app.use('/api/users', userRouter);
 
 app.post('/api/users/signup', function(req, res, next){
-  console.log('how', req.body.username);
   //create new user session and database entry if username does not already exist
+  var latest = req.body;
   new User({user_name: req.body.username}).fetch()
     .then(function(foundUser){
-      console.log('far');
       if (!foundUser){
-        console.log('does');
-        new User({username: req.body.username, password: req.body.password}).save().then(function(newUser){
+        new User({
+          user_name: latest.username, 
+          password: latest.password,
+          email: latest.email,
+          first_name: latest.firstname,
+          last_name: latest.lastname,
+          token: latest.token
+        }).save().then(function(newUser){
           req.session.regenerate(function() {
-            console.log('this');
             req.session.user = newUser;
             res.redirect('/');
           });
         });
       } else {
-        console.error('User already exists!');
+        res.send(418, 'User already exists!');
       }
     });
 });
