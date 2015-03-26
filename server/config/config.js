@@ -18,7 +18,7 @@ var knex = require('knex')({
 		user: process.env.JAWSDB_USER || 'root',
 		password: process.env.JAWSDB_PW || '',
 		// database: process.env.JAWSDB_DB ,//|| 'jobpanda',
-    // port: process.env.JAWSDB_PORT,
+    port: process.env.JAWSDB_PORT,
 		charset: 'utf8'
 	}
 });
