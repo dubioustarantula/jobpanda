@@ -38,6 +38,9 @@ var JobListBox = React.createClass({
   componentWillUnmount: function() {
     this.unsuscribe();
   },
+  handleClick: function() {
+    console.log("butterbeans")
+  },
 
   render: function() {
     return (
@@ -45,9 +48,8 @@ var JobListBox = React.createClass({
       <EditModal />
         <Paper z="1">
           <Tabs> 
-            <Tab label="My Jobs" > 
+            <Tab label="My Jobs"> 
               <div className="tab-template-container"> 
-                <h2 className="mui-font-style-headline">All Of My Added Jobs</h2>
                 <JobList jobs={this.state.jobs} onEdit={this.props.onChange} openModal={this.props.openModal} />
               </div> 
             </Tab> 
