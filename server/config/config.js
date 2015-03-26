@@ -16,8 +16,8 @@ var knex = require('knex')({
 	connection: {
 		host: process.env.JAWSDB_URL || 'localhost'/*Local Host for testing, ENV host for deployment*/,
     // port: process.env.JAWSDB_PORT || 8000,
-		user: process.env.JAWSDB_USER || 'root',
-		password: process.env.JAWSDB_PW || '',
+		// user: process.env.JAWSDB_USER || 'root',
+		// password: process.env.JAWSDB_PW || '',
 		database: process.env.JAWSDB_DB || 'jobpanda',
 		charset: 'utf8'
 	}
