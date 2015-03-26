@@ -8,9 +8,6 @@ var unsafe = Reactable.unsafe;
 
 var menuItems = {};
 var JobList = React.createClass({
-  handleClick: function() {
-    console.log("eggtarts");
-  },
   render: function(){
     return (
         <Table 

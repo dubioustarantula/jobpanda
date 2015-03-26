@@ -13,7 +13,7 @@ var EditButton = require('../components/EditButton.jsx');
 var _jobData = [
   {
    "id" : 012345,  
-   "title":"Class Lead",
+   "title":"Class Leader",
    "company": "Hack Reactor",
    "location": "San Francsico, CA",
    "source_network": "LinkedIn",
@@ -183,7 +183,7 @@ var _jobs = _jobData.map(function(jobDatum) {
   return jobDatum;
 })
 
-console.log(_jobs)
+console.log(_jobs);
 
 // <select className="browser-default"> <option value="" disabled selected>Choose your option</option><option value="No Response">No Response</option> <option value="Interview">Interview</option> <option value="Rejected">Rejected</option> <option value="Offer">Offer</option> <option value="Pending">Pending</option> </select>
 
@@ -200,7 +200,7 @@ var JobStore = Reflux.createStore({
         type: "GET",
         url: '/api/listings',
       }).done(function(data){
-          console.log(data);
+          console.log('job-data', data);
           _jobs = [data]; //push data to store
           context.trigger(_jobs);
       });
