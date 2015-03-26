@@ -22,8 +22,6 @@ var EditModal = React.createClass({
 	  this.setState({modalIsOpen: false});
 	},
 	render: function() {
-		var ex = this.props.jobDetails;
-		console.log('job-details', ex);
 		return (
 			<Modal className="ignore-react-onclickoutside" isOpen={this.state.modalIsOpen}>
 			  <h2>Edit Job</h2>

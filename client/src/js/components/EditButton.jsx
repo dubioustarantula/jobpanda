@@ -11,7 +11,6 @@ var EditButton = React.createClass({
 	},
 	render: function() {
 		var jobInfo = this.props.editData;
-		console.log('job-info', jobInfo);
 		return (
 			<div>
 				<p onClick={this.openSesame}>Edit</p>
