@@ -76,6 +76,8 @@ gulp.task('build', function(){
 gulp.task('webserver', function() {
   gulp.src('./client/dist')
     .pipe(server({
+      host: 'localhost',
+      port: 8000,
       livereload: true,
       directoryListing: false,
       defaultFile: '/index.html',

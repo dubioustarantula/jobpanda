@@ -11,17 +11,14 @@ var path = require('path');
 
 /*====== INITIALIZE BOOKSHELF CONNECTION TO POSTGRESS DB ======*/
 
-console.log(process.env.JAWSDB_HOST);
-
 var knex = require('knex')({
 	client: 'mysql',
 	connection: {
-    url: process.env.JAWSDB_URL,
-		// host: process.env.JAWSDB_HOST, //|| 'localhost'/*Local Host for testing, ENV host for deployment*/,
-		user: process.env.JAWSDB_USER ,//|| 'root',
-		password: process.env.JAWSDB_PW, //|| '',
-		database: process.env.JAWSDB_DB ,//|| 'jobpanda',
-    port: process.env.JAWSDB_PORT,
+		host: process.env.JAWSDB_HOST || 'localhost'/*Local Host for testing, ENV host for deployment*/,
+		user: process.env.JAWSDB_USER || 'root',
+		password: process.env.JAWSDB_PW || '',
+		database: 'jobpanda',
+    port: process.env.JAWSDB_PORT || 3306, //3306 is default mysql port
 		charset: 'utf8'
 	}
 });
