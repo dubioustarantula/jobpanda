@@ -96,7 +96,7 @@ app.post('/api/users/login', function(req, res, next){
   //check username and password to log in
   var username = req.body.username;
   var password = req.body.password;
-  new User({username: username}).fetch().then(function(user){
+  new User({user_name: username}).fetch().then(function(user){
     if( !user ){
       res.redirect('/');
     } else {
