@@ -1,4 +1,7 @@
 var userController = require('../controllers/userController.js');
+var express = require('express');
+var app = express();
+
 
 var isLoggedIn = function(req, res, next) {
   //if user is authenticated in the session, carry on
@@ -12,10 +15,14 @@ var isLoggedIn = function(req, res, next) {
 
 
 module.exports = function(app, passport) {
-
+  
   //HOME PAGE
   app.get('/', userController.index);
   app.get('/login', userController.login);
+  app.get('/signin', function(req, res) {
+    console.log('trying here');
+    res.render('../../client/src/js/index.html');
+  });
 
 
   //PROFILE
