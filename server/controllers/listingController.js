@@ -51,13 +51,13 @@ module.exports = {
 							entry.salary = listing.get('salary');
 							entry.response_type = listing.get('response_type');
 							//grab data from related tables based on foreign keys in listing model
-							new Field({id: listing.get('id')}).fetch().then(function(field){
+							new Field({id: listing.get('field_id')}).fetch().then(function(field){
 								entry.field = field.get('field_name');
-								new Position({id: listing.get('id')}).fetch().then(function(field){
+								new Position({id: listing.get('position_id')}).fetch().then(function(field){
 									entry.position = field.get('position_name');
-									new Locations({id: listing.get('id')}).fetch().then(function(locations){
+									new Locations({id: listing.get('location_id')}).fetch().then(function(locations){
 										entry.location = locations.get('city');
-										new Source({id: listing.get('id')}).fetch().then(function(source){
+										new Source({id: listing.get('source_id')}).fetch().then(function(source){
 											entry.source = source.get('source_name');
 											//once all fields in entry object are added, push object to results array
 											results.push(entry);
@@ -112,7 +112,7 @@ module.exports = {
 					} else {
 						//if listing does not exist, set up job field relationship
 						//callback chain that eventually results in new listing entry
-						console.log('adding this shut');
+						console.log('adding to database:', req.body);
 						findField(req.body, params, user, res);
 					}
 				});
