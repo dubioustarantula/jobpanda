@@ -70,6 +70,7 @@ console.log(__dirname);
 app.post('/api/users/signup', function(req, res, next){
   //create new user session and database entry if username does not already exist
   var latest = req.body;
+  console.log(latest);
   new User({user_name: req.body.username}).fetch()
     .then(function(foundUser){
       if (!foundUser){
@@ -131,7 +132,7 @@ app.get('/api/users/checkbookmarklet', function(req, res, next){
   if (!loggedIn){
     res.send(response);
   } else {
-    new User({username: loggedIn.username}).fetch().then(function(user){
+    new User({user_name: loggedIn.username}).fetch().then(function(user){
       if (!user){
         res.send(response);
       } else {

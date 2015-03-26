@@ -27,9 +27,11 @@ module.exports = {
 	getListing: function(req, res, next){
 		//set results array to return as response
 		var results = [];
-		// mock user info:
-		// var userInfo = {username: 'tester'};
-		// var newUser = new User({user_name: 'tester'});
+
+		//Find logged in user here
+
+		var userId = userId || 1;
+		var newUser = new User({id: userId});
 
 		//find user entry in database
 		newUser.fetch().then(function(user){
@@ -81,6 +83,9 @@ module.exports = {
 	saveListing: function(req, res, next){
 		//set object for adding params to bookshelf model
 		var params = {};
+
+		//find logged in user here
+
 		//find user db entry (mock user data)
 		var username = username || "guest";
 		var newUser = new User({user_name: username});
@@ -107,6 +112,7 @@ module.exports = {
 					} else {
 						//if listing does not exist, set up job field relationship
 						//callback chain that eventually results in new listing entry
+						console.log('adding this shut');
 						findField(req.body, params, user, res);
 					}
 				});
@@ -252,10 +258,10 @@ var findSource = function(reqBody, params, user, res){
 var newListing = function(reqBody, params, user, res){
 	//initialize non-relation params
 	params.url = reqBody.jobURL;
-	params.employment_type = reqBody.company.employmentType;
-	params.experience = reqBody.company.experience;
-	params.salary = reqBody.company.salary;
-	params.response_type = reqBody.responseType;
+	params.employment_type = reqBody.companyEmploymentType; //bbbbbb
+	params.experience = reqBody.companyExperience; //bbbbbb
+	params.salary = reqBody.companySalary;//bbbbbb
+	params.response_type = reqBody.responseType;//bbbbbb
 
 	var listing = new Listing(params);
 	//Set listing relationship to user then save to DB
