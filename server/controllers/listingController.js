@@ -258,10 +258,10 @@ var findSource = function(reqBody, params, user, res){
 var newListing = function(reqBody, params, user, res){
 	//initialize non-relation params
 	params.url = reqBody.jobURL;
-	params.employment_type = reqBody.companyEmploymentType; //bbbbbb
-	params.experience = reqBody.companyExperience; //bbbbbb
-	params.salary = reqBody.companySalary;//bbbbbb
-	params.response_type = reqBody.responseType;//bbbbbb
+	params.employment_type = reqBody.company.employmentType;
+	params.experience = reqBody.company.experience;
+	params.salary = reqBody.company.salary;
+	params.response_type = reqBody.responseType;
 
 	var listing = new Listing(params);
 	//Set listing relationship to user then save to DB
