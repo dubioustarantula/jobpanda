@@ -4,7 +4,7 @@ var LinkedinStrategy = require('passport-linkedin').Strategy;
 var User = require('../models/user');
 
 //load the auth variables
-var configAuth = require('/authorization.js');
+var configAuth = require('./authorization.js');
 
 
 //expose this function to our app using module.exports

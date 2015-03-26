@@ -14,9 +14,7 @@ var session = require('express-session');
 var path = require('path');
 var url = require('url');
 var errorHandler = require('errorhandler');
-var config = require('./config');
-var bookshelf = require('./app/config');
-app.set('bookshelf', bookshelf);
+var config = require('./server/config/config');
 
 
 //pass passport for configuration

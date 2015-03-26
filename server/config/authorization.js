@@ -10,7 +10,7 @@ module.exports = {
     'linkedinAuth' : {
         'clientID' : clientID,
         'clientSecret' : clientSecret,
-        'callbackURL' : 'http://jobpanda.herokuapp.com/auth/linkedin/callback'
+        'callbackURL' : 'http://jpanda.herokuapp.com/auth/linkedin/callback'
     }
 };
 
