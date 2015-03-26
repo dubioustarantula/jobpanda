@@ -51,6 +51,7 @@
     "react": "^0.12.2",
     "react-chartjs": "^0.5.0",
     "react-modal": "^0.1.0",
+    "react-onclickoutside": "^0.2.3",
     "react-tap-event-plugin": "^0.1.4",
     "reactable": "^0.10.1",
     "reactify": "^1.1.0",
@@ -59,7 +60,6 @@
     "watchify": "^2.4.0"
   },
   "devDependencies": {
-    "harmonize": "^1.4.1",
     "jest-cli": "^0.4.0",
     "react-tools": "^0.13.1"
   }
