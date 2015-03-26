@@ -10,7 +10,8 @@ var User = db.Model.extend({
 	tableName: 'users',
   //if the section below looks very familiar... that's because it is
 	initialize: function(){
-    this.on('creating', this.hashPassword);
+    this.on('creating', this.generateHash(this.get('password')));
+    console.log('user initialized');
   },
   validPassword: function(attemptedPassword, callback) {
     bcrypt.compareSync(attemptedPassword, this.get('password'), function(err, isMatch) {

@@ -9,6 +9,16 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
+
+//these were in Kango but idk if they are necessary
+var path = require('path');
+var url = require('url');
+var errorHandler = require('errorhandler');
+var config = require('./config');
+var bookshelf = require('./app/config');
+app.set('bookshelf', bookshelf);
+
+
 //pass passport for configuration
 require('./server/config/passport.js')(passport);
 
@@ -16,10 +26,11 @@ require('./server/config/passport.js')(passport);
 //set up our express application
 app.use(morgan('dev')); //log every request to the console
 app.use(cookieParser()); //read cookies (needed for auth)
-app.use(bodyParser()); //get information from html forms
+app.use(bodyParser.json()); //get information from html forms
+app.use(bodyParser.urlencoded({extended: true}));
 
 //required for passport
-app.use(express.session({secret: 'teamdubioustarantula'})); //session secret
+app.use(session({secret: 'teamdubioustarantula'})); //session secret
 app.use(passport.initialize());
 app.use(passport.session()); //persistent login sessions
 app.use(flash()); //use connect-flash for flash messages stored in session

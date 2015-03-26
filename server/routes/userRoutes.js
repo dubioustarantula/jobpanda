@@ -14,7 +14,10 @@ var isLoggedIn = function(req, res, next) {
 module.exports = function(app, passport) {
 
   //HOME PAGE
-  app.get('/', controllers.index);
+  app.get('/', userController.index);
+  app.get('/login', userController.login);
+  app.get('/signup', userController.signup);
+
 
   //PROFILE
   //we will want this protected so you have to be logged in to visit
@@ -74,10 +77,11 @@ module.exports = function(app, passport) {
   //for local account, remove email and password
   //user account will stay active in case they want to reconnect in the future
 
+
   //linkedin
   app.get('/unlink/linkedin', function(req, res) {
     var user = req.user;
-    user.linkedin.token = undefined;
+    user.token = undefined;
     user.save(function(err) {
       res.redirect('/profile');
     });

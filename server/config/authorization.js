@@ -1,9 +1,18 @@
-//expose our config directly to our application using module.exports
+//load the auth variables
+var nconf = require ('nconf');
+nconf.file('settings.json');
+     .env();
+
+var clientID = nconf.get('clientID');
+var clientSecret = nconf.get('clientSecret');
+
 module.exports = {
-  
-}
-
-
+    'linkedinAuth' : {
+        'clientID' : clientID,
+        'clientSecret' : clientSecret,
+        'callbackURL' : 'http://jobpanda.herokuapp.com/auth/linkedin/callback'
+    }
+};
 
 
 
