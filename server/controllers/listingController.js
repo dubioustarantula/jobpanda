@@ -30,7 +30,7 @@ module.exports = {
 
 		//Find logged in user here
 
-		var userId = userId || 1;
+		var userId = userId || 1; //this is the guest account
 		var newUser = new User({id: userId});
 
 		//find user entry in database
@@ -61,7 +61,7 @@ module.exports = {
 											entry.source = source.get('source_name');
 											//once all fields in entry object are added, push object to results array
 											results.push(entry);
-											if (temp === listings.length - 1){
+											if (temp === listings.length-1){
 												//send results in response once we finish pushing the last listing info
 												res.send(results);
 											}
@@ -261,7 +261,8 @@ var newListing = function(reqBody, params, user, res){
 	params.employment_type = reqBody.company.employmentType;
 	params.experience = reqBody.company.experience;
 	params.salary = reqBody.company.salary;
-	params.response_type = reqBody.responseType;
+	params.app_url = reqBody.applyLink;
+	params.post_date = reqBody.dayPosted;
 
 	var listing = new Listing(params);
 	//Set listing relationship to user then save to DB
