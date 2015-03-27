@@ -76,7 +76,7 @@ module.exports = {
 								results.push(entry);
 
 								if(results.length === listings.length) {
-									res.send(200, results);
+									res.status(200).send(results);
 								}
 							});
 						});
