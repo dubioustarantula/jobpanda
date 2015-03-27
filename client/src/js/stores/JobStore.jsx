@@ -13,173 +13,173 @@ var EmployerRating = require('../components/EmployerRating.jsx');
 // var Keys = require('../../../keys.js');
 
 // console.log(Keys.glassdoor_id);
-var _jobData = [
-  {
-   "id" : 012345,  
-   "title":"Class Leader",
-   "company": "Hack Reactor",
-   "location": "San Francsico, CA",
-   "source_network": "LinkedIn",
-   "apply_link":<a className="btn-flat disabled">Applied</a>,
-   "favorite": '',
-   "status": 'No Response',
-   "date_added": "3/15/15"
-},
-  {
-   "id" : 012346,  
-   "title":"Lecturer",
-   "company": "Hack Reactor",
-   "location": "San Francsico, CA",
-   "source_network": "LinkedIn",
-   "apply_link":<a className="waves-effect waves-light btn pink">Apply</a>,
-   "favorite": <i className="mdi-action-grade icon-medium" />,
-   "status":  'No Response',
-   "date_added": "3/18/15"
-},
-  {
-   "id" : 012346,  
-   "title":"Lecturer",
-   "company": "Maker Square",
-   "location": "Austin, TX",
-   "source_network": "LinkedIn",
-   "apply_link":<a href="http://makersquare.com" className="waves-effect waves-light btn pink">Apply</a>,
-   "favorite": <i className="mdi-action-grade icon-medium" />,
-   "status": 'Interview',
-   "date_added": "3/18/15",
-},
+var _jobData = [];
+//   {
+//    "id" : 012345,  
+//    "title":"Class Leader",
+//    "company": "Hack Reactor",
+//    "location": "San Francsico, CA",
+//    "source_network": "LinkedIn",
+//    "apply_link":<a className="btn-flat disabled">Applied</a>,
+//    "favorite": '',
+//    "status": 'No Response',
+//    "date_added": "3/15/15"
+// },
+//   {
+//    "id" : 012346,  
+//    "title":"Lecturer",
+//    "company": "Hack Reactor",
+//    "location": "San Francsico, CA",
+//    "source_network": "LinkedIn",
+//    "apply_link":<a className="waves-effect waves-light btn pink">Apply</a>,
+//    "favorite": <i className="mdi-action-grade icon-medium" />,
+//    "status":  'No Response',
+//    "date_added": "3/18/15"
+// },
+//   {
+//    "id" : 012346,  
+//    "title":"Lecturer",
+//    "company": "Maker Square",
+//    "location": "Austin, TX",
+//    "source_network": "LinkedIn",
+//    "apply_link":<a href="http://makersquare.com" className="waves-effect waves-light btn pink">Apply</a>,
+//    "favorite": <i className="mdi-action-grade icon-medium" />,
+//    "status": 'Interview',
+//    "date_added": "3/18/15",
+// },
 
-  {
-   "id" : 012346,  
-   "title":"Designer",
-   "company": "Google",
-   "location": "Mountain View, CA",
-   "source_network": "LinkedIn",
-   "apply_link":<a href="http://google.com" className="waves-effect waves-light btn pink">Apply</a>,
-   "favorite": <i className="mdi-action-grade icon-medium" />,
-   "status":  <a className="btn-flat disabled">No Response</a>,
-   "date_added": "3/21/15"
-},
+//   {
+//    "id" : 012346,  
+//    "title":"Designer",
+//    "company": "Google",
+//    "location": "Mountain View, CA",
+//    "source_network": "LinkedIn",
+//    "apply_link":<a href="http://google.com" className="waves-effect waves-light btn pink">Apply</a>,
+//    "favorite": <i className="mdi-action-grade icon-medium" />,
+//    "status":  <a className="btn-flat disabled">No Response</a>,
+//    "date_added": "3/21/15"
+// },
 
-  {
-   "id" : 012346,  
-   "title":"Designer",
-   "company": "Google",
-   "location": "Mountain View, CA",
-   "source_network": "LinkedIn",
-   "apply_link":<a href="http://google.com" className="waves-effect waves-light btn pink">Apply</a>,
-   "favorite": <i className="mdi-action-grade icon-medium" />,
-   "status":  <a className="btn-flat disabled">No Response</a>,
-   "date_added": "3/21/15"
-},
+//   {
+//    "id" : 012346,  
+//    "title":"Designer",
+//    "company": "Google",
+//    "location": "Mountain View, CA",
+//    "source_network": "LinkedIn",
+//    "apply_link":<a href="http://google.com" className="waves-effect waves-light btn pink">Apply</a>,
+//    "favorite": <i className="mdi-action-grade icon-medium" />,
+//    "status":  <a className="btn-flat disabled">No Response</a>,
+//    "date_added": "3/21/15"
+// },
 
-  {
-   "id" : 012346,  
-   "title":"Bike Mechanic",
-   "company": "PostMates",
-   "location": "San Francisco, CA",
-   "source_network": "AngelList",
-   "apply_link":<a href="http://google.com" className="waves-effect waves-light btn pink">Apply</a>,
-   "favorite": <i className="mdi-action-grade icon-medium" />,
-   "status":  <a className="btn-flat disabled">No Response</a>,
-   "date_added": "3/21/15"
-},
+//   {
+//    "id" : 012346,  
+//    "title":"Bike Mechanic",
+//    "company": "PostMates",
+//    "location": "San Francisco, CA",
+//    "source_network": "AngelList",
+//    "apply_link":<a href="http://google.com" className="waves-effect waves-light btn pink">Apply</a>,
+//    "favorite": <i className="mdi-action-grade icon-medium" />,
+//    "status":  <a className="btn-flat disabled">No Response</a>,
+//    "date_added": "3/21/15"
+// },
 
-  {
-   "id" : 012346,  
-   "title":"Designer",
-   "company": "Yahoo",
-   "location": "Mountain View, CA",
-   "source_network": "LinkedIn",
-   "apply_link":<a href="http://google.com" className="waves-effect waves-light btn pink">Apply</a>,
-   "favorite": <i className="mdi-action-grade icon-medium" />,
-   "status":  'No Response',
-   "date_added": "3/21/15"
-},
+//   {
+//    "id" : 012346,  
+//    "title":"Designer",
+//    "company": "Yahoo",
+//    "location": "Mountain View, CA",
+//    "source_network": "LinkedIn",
+//    "apply_link":<a href="http://google.com" className="waves-effect waves-light btn pink">Apply</a>,
+//    "favorite": <i className="mdi-action-grade icon-medium" />,
+//    "status":  'No Response',
+//    "date_added": "3/21/15"
+// },
 
-  {
-   "id" : 012346,  
-   "title":"Software Engineer",
-   "company": "Yahoo",
-   "location": "Mountain View, CA",
-   "source_network": "LinkedIn",
-   "apply_link":<a href="http://google.com" className="waves-effect waves-light btn pink">Apply</a>,
-   "favorite": <i className="mdi-action-grade icon-medium" />,
-   "status":  <a className="btn-flat disabled">No Response</a>,
-   "date_added": "3/21/15"
-},
+//   {
+//    "id" : 012346,  
+//    "title":"Software Engineer",
+//    "company": "Yahoo",
+//    "location": "Mountain View, CA",
+//    "source_network": "LinkedIn",
+//    "apply_link":<a href="http://google.com" className="waves-effect waves-light btn pink">Apply</a>,
+//    "favorite": <i className="mdi-action-grade icon-medium" />,
+//    "status":  <a className="btn-flat disabled">No Response</a>,
+//    "date_added": "3/21/15"
+// },
 
-  {
-   "id" : 012346,  
-   "title":"Designer",
-   "company": "Microsoft",
-   "location": "Redmond, WA",
-   "source_network": "LinkedIn",
-   "apply_link":<a href="http://google.com" className="waves-effect waves-light btn pink">Apply</a>,
-   "favorite": <i className="mdi-action-grade icon-medium" />,
-   "status":  <a className="btn-flat disabled">No Response</a>,
-   "date_added": "3/21/15"
-},
+//   {
+//    "id" : 012346,  
+//    "title":"Designer",
+//    "company": "Microsoft",
+//    "location": "Redmond, WA",
+//    "source_network": "LinkedIn",
+//    "apply_link":<a href="http://google.com" className="waves-effect waves-light btn pink">Apply</a>,
+//    "favorite": <i className="mdi-action-grade icon-medium" />,
+//    "status":  <a className="btn-flat disabled">No Response</a>,
+//    "date_added": "3/21/15"
+// },
 
-  {
-   "id" : 012346,  
-   "title":"Janitor",
-   "company": "Google",
-   "location": "Mountain View, CA",
-   "source_network": "LinkedIn",
-   "apply_link":<a className="btn-flat disabled">Applied</a>,
-   "favorite": <i className="mdi-action-grade icon-medium" />,
-   "status":  <a className="btn-flat disabled">No Response</a>,
-   "date_added": "3/21/15"
-},
+//   {
+//    "id" : 012346,  
+//    "title":"Janitor",
+//    "company": "Google",
+//    "location": "Mountain View, CA",
+//    "source_network": "LinkedIn",
+//    "apply_link":<a className="btn-flat disabled">Applied</a>,
+//    "favorite": <i className="mdi-action-grade icon-medium" />,
+//    "status":  <a className="btn-flat disabled">No Response</a>,
+//    "date_added": "3/21/15"
+// },
 
-  {
-   "id" : 012346,  
-   "title":"iOS Developer",
-   "company": "Uber",
-   "location": "San Francisco, CA",
-   "source_network": "AngelList",
-   "apply_link":<a href="http://google.com" className="waves-effect waves-light btn pink">Apply</a>,
-   "favorite": <i className="mdi-action-grade icon-medium" />,
-   "status":  <a className="btn-flat disabled">No Response</a>,
-   "date_added": "3/21/15"
-},
+//   {
+//    "id" : 012346,  
+//    "title":"iOS Developer",
+//    "company": "Uber",
+//    "location": "San Francisco, CA",
+//    "source_network": "AngelList",
+//    "apply_link":<a href="http://google.com" className="waves-effect waves-light btn pink">Apply</a>,
+//    "favorite": <i className="mdi-action-grade icon-medium" />,
+//    "status":  <a className="btn-flat disabled">No Response</a>,
+//    "date_added": "3/21/15"
+// },
 
-  {
-   "id" : 012346,  
-   "title":"Designer",
-   "company": "Apple",
-   "location": "Cupertino, CA",
-   "source_network": "LinkedIn",
-   "apply_link":<a className="btn-flat disabled">Applied</a>,
-   "favorite": <i className="mdi-action-grade icon-medium" />,
-   "status":  <a className="btn-flat disabled">No Response</a>,
-   "date_added": "3/19/15"
-},
+//   {
+//    "id" : 012346,  
+//    "title":"Designer",
+//    "company": "Apple",
+//    "location": "Cupertino, CA",
+//    "source_network": "LinkedIn",
+//    "apply_link":<a className="btn-flat disabled">Applied</a>,
+//    "favorite": <i className="mdi-action-grade icon-medium" />,
+//    "status":  <a className="btn-flat disabled">No Response</a>,
+//    "date_added": "3/19/15"
+// },
 
-  {
-   "id" : 012346,  
-   "title":"Executive Assistant",
-   "company": "Google",
-   "location": "Mountain View, CA",
-   "source_network": "AngelList",
-   "apply_link":<a className="btn-flat disabled">Applied</a>,
-   "favorite": <i className="mdi-action-grade icon-medium" />,
-   "status":  <a className="btn-flat disabled">Rejected</a>,
-   "date_added": "3/21/15"
-},
+//   {
+//    "id" : 012346,  
+//    "title":"Executive Assistant",
+//    "company": "Google",
+//    "location": "Mountain View, CA",
+//    "source_network": "AngelList",
+//    "apply_link":<a className="btn-flat disabled">Applied</a>,
+//    "favorite": <i className="mdi-action-grade icon-medium" />,
+//    "status":  <a className="btn-flat disabled">Rejected</a>,
+//    "date_added": "3/21/15"
+// },
 
-  {
-   "id" : 012346,  
-   "title":"Designer",
-   "company": "Google",
-   "location": "Mountain View, CA",
-   "source_network": "Monster",
-   "apply_link":<a className="btn-flat disabled">Applied</a>,
-   "favorite": <i className="mdi-action-grade icon-medium" />,
-   "status":  <a className="btn-flat disabled">Offer</a>,
-   "date_added": "3/21/15"
-}
-];
+//   {
+//    "id" : 012346,  
+//    "title":"Designer",
+//    "company": "Google",
+//    "location": "Mountain View, CA",
+//    "source_network": "Monster",
+//    "apply_link":<a className="btn-flat disabled">Applied</a>,
+//    "favorite": <i className="mdi-action-grade icon-medium" />,
+//    "status":  <a className="btn-flat disabled">Offer</a>,
+//    "date_added": "3/21/15"
+// }
+// ];
 
 var _jobs = _jobData.map(function(jobDatum) {
   jobDatum.edit = <EditButton editData= {jobDatum}/>
@@ -190,8 +190,7 @@ var _jobs = _jobData.map(function(jobDatum) {
 $('label:contains("No Response")').addClass('');
 $('.status:contains("OFFER")').css('color', 'green');
 
-console.log(_jobs);
-console.log("signal fire 25");
+console.log("signal fire 27");
 
 var JobStore = Reflux.createStore({
   init: function(){
@@ -206,7 +205,7 @@ var JobStore = Reflux.createStore({
         type: "GET",
         url: '/api/listings',
       }).done(function(data){
-          console.log('job-data', data);
+          console.log('this is data', data);
           _jobs = [data]; //push data to store
           context.trigger(_jobs);
       });
@@ -218,7 +217,6 @@ var JobStore = Reflux.createStore({
         data: _jobs,
         url: '/api/listings',
       }).done(function(data){
-          console.log(data);
           context.trigger(_jobs);
       });
   },

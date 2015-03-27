@@ -8,7 +8,11 @@ var unsafe = Reactable.unsafe;
 
 var menuItems = {};
 var JobList = React.createClass({
+  componentWillMount: function() {
+    
+  },
   render: function(){
+    console.log('this.props in job list', this.props.jobs);
     return (
         <Table 
         className="job-table striped table" 
