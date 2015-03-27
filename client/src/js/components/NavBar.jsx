@@ -21,9 +21,8 @@ var NavBar = React.createClass({
     return (
         <Toolbar>
           <ToolbarGroup key={0} float="left">
-             <a className="hidden-link" href="/"><h2 className="mui-app-bar-title">P</h2></a>
+             <a className="hidden-link" href="/"><h2 className="mui-app-bar-title">JobPanda</h2></a>
           </ToolbarGroup>
-<<<<<<< HEAD
           <ToolbarGroup key={1} float="left">
              <DropDownMenu menuItems={filterOptions} />
           </ToolbarGroup>
@@ -31,9 +30,6 @@ var NavBar = React.createClass({
              <RaisedButton label="Log in" linkButton={true} primary={true} href="/login" />
           </ToolbarGroup>
         </Toolbar>
-=======
-          </Toolbar>
->>>>>>> master
       );
   }
 });

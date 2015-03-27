@@ -4,18 +4,11 @@ var mui = require('material-ui');
 var JobStore = require('../stores/JobStore.jsx');
 
 var EditModal = React.createClass({
-	mixins: [
-	   require('react-onclickoutside')
-	],
-
-  handleClickOutside: function(evt) {
-  	this.closeModal();
-  },
 	getInitialState: function() {
-	  return {modalIsOpen: false};
+	  return {modalIsOpen: true};
 	},
 	openModal: function(){
-	  console.log('Modal has been opened!');
+	  console.log('lol');
 	  this.setState({modalIsOpen: true});
 	},
 	closeModal: function(){
@@ -23,13 +16,13 @@ var EditModal = React.createClass({
 	},
 	render: function() {
 		return (
-			<Modal className="ignore-react-onclickoutside" isOpen={this.state.modalIsOpen}>
+			<Modal isOpen={this.state.modalIsOpen}>
 			  <h2>Edit Job</h2>
 			  <div className="row">
 			    <form className="col s12">
 			      <div className="row">
 			        <div className="input-field col s6">
-			          <input id="first_name" type="text" className="validate">{this.props.jobDetails.title}</input>
+			          <input id="first_name" type="text" className="validate" />
 			          <label for="first_name">Job Title</label>
 			        </div>
 			        <div className="input-field col s6">

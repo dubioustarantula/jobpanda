@@ -27,11 +27,9 @@ module.exports = {
 	getListing: function(req, res, next){
 		//set results array to return as response
 		var results = [];
-
-		//Find logged in user here
-
-		var userId = userId || 1; //this is the guest account
-		var newUser = new User({id: userId});
+		// mock user info:
+		// var userInfo = {username: 'tester'};
+		// var newUser = new User({user_name: 'tester'});
 
 		//find user entry in database
 		newUser.fetch().then(function(user){
@@ -51,17 +49,17 @@ module.exports = {
 							entry.salary = listing.get('salary');
 							entry.response_type = listing.get('response_type');
 							//grab data from related tables based on foreign keys in listing model
-							new Field({id: listing.get('field_id')}).fetch().then(function(field){
+							new Field({id: listing.get('id')}).fetch().then(function(field){
 								entry.field = field.get('field_name');
-								new Position({id: listing.get('position_id')}).fetch().then(function(field){
+								new Position({id: listing.get('id')}).fetch().then(function(field){
 									entry.position = field.get('position_name');
-									new Locations({id: listing.get('location_id')}).fetch().then(function(locations){
+									new Locations({id: listing.get('id')}).fetch().then(function(locations){
 										entry.location = locations.get('city');
-										new Source({id: listing.get('source_id')}).fetch().then(function(source){
+										new Source({id: listing.get('id')}).fetch().then(function(source){
 											entry.source = source.get('source_name');
 											//once all fields in entry object are added, push object to results array
 											results.push(entry);
-											if (temp === listings.length-1){
+											if (temp === listings.length - 1){
 												//send results in response once we finish pushing the last listing info
 												res.send(results);
 											}
@@ -83,11 +81,8 @@ module.exports = {
 	saveListing: function(req, res, next){
 		//set object for adding params to bookshelf model
 		var params = {};
-
-		//find logged in user here
-
 		//find user db entry (mock user data)
-		var username = username || "guest";
+		var username = "tester";
 		var newUser = new User({user_name: username});
 		newUser.fetch().then(function(user){
 			if (user){
@@ -112,7 +107,6 @@ module.exports = {
 					} else {
 						//if listing does not exist, set up job field relationship
 						//callback chain that eventually results in new listing entry
-						console.log('adding to database:', req.body);
 						findField(req.body, params, user, res);
 					}
 				});
@@ -261,8 +255,7 @@ var newListing = function(reqBody, params, user, res){
 	params.employment_type = reqBody.company.employmentType;
 	params.experience = reqBody.company.experience;
 	params.salary = reqBody.company.salary;
-	params.app_url = reqBody.applyLink;
-	params.post_date = reqBody.dayPosted;
+	params.response_type = reqBody.responseType;
 
 	var listing = new Listing(params);
 	//Set listing relationship to user then save to DB
