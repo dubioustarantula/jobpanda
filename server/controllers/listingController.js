@@ -24,10 +24,12 @@ var Promise   = require('bluebird'),
 //It was easier for me to implement callback hell in a limited time.
 //Promises with bluebird may make for cleaner code.
 
+var results = [];	
+
 module.exports = {
 	getListing: function(req, res, next){
 		//set results array to return as response
-		var results = [];
+		// var results = [];
 
 		//Find logged in user here
 
@@ -40,33 +42,45 @@ module.exports = {
 				var id = user.get('id');
 				//if the user entry exists, grab user id, and run a query in user/listing joins table
 				new JobUser({user_id: id}).fetchAll().then(function(listings){
-					console.log(listings);
+					listings = listings.models;
 					//for each listing found, create an object to add to response array
 					for (var i = 0; i < listings.length; i++){
-						var entry = {};
 						var temp = i;
 						//grab listing data based on listing_id
-						new Listing({id: listings.models[i].get('id')}).fetch().then(function(listing){
-							entry.url = listing.get('url');
-							entry.employment_type = listing.get('employment_type');
-							entry.experience = listing.get('experience');
-							entry.salary = listing.get('salary');
-							//grab data from related tables based on foreign keys in listing model
-								new Position({id: listing.get('position_id')}).fetch().then(function(position){
-									entry.position = position.get('position_name');
-									new Locations({id: listing.get('location_id')}).fetch().then(function(locations){
-										entry.location = locations.get('city');
-										new Source({id: listing.get('source_id')}).fetch().then(function(source){
-											entry.source = source.get('source_name');
-											//once all fields in entry object are added, push object to results array
-											results.push(entry);
-											if (temp === listings.length-1){
-												//send results in response once we finish pushing the last listing info
-												res.send(results);
-											}
-										});
-									});
-								});
+						new Listing({id: listings[i].get('id')}).fetch({
+							withRelated: ['locations', 'positions', 'sources']
+						}).then(function(listing){
+							//get relational data
+							var location = listing.related('locations');
+							var position = listing.related('positions');
+							var source = listing.related('sources');
+							//query companies with reladted industries
+							new Company({id: location.get('company_id')}).fetch({
+								withRelated: ['industries']
+							}).then(function(company){
+								//get related industry
+								var industry = company.related('industries');
+								//set values
+								var entry = {};
+								entry.industry = industry.get('industry');
+								entry.posted = listing.get('post_date');
+								entry.location = location.get('city');
+								entry.url = listing.get('url');
+								entry.employment_type = listing.get('employment_type');
+								entry.experience = listing.get('experience');
+								entry.salary = listing.get('salary');
+								entry.applyLink = listing.get('app_url');
+								entry.position = position.get('position_name');
+								entry.company = company.get('company_name');
+								entry.glassDoor = company.get('glass_door_rating');
+								entry.source = source.get('source_name');
+								
+								results.push(entry);
+
+								if(results.length === listings.length) {
+									res.send(200, results);
+								}
+							});
 						});
 					}
 				});
@@ -111,7 +125,6 @@ module.exports = {
 					} else {
 						//if listing does not exist, set up job field relationship
 						//callback chain that eventually results in new listing entry
-						console.log('adding to database:', req.body);
 						findPosition(req.body, params, user, res);
 					}
 				});
