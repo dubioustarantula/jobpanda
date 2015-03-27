@@ -87,6 +87,8 @@ app.post('/api/users/signup', function(req, res, next){
           });
         });
       } else {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.send(418, 'User already exists!');
       }
     });
@@ -129,13 +131,19 @@ app.get('/api/users/checkbookmarklet', function(req, res, next){
   response.isAuthenticated = false;
   var loggedIn = req.session ? !!req.session.user : false;
   if (!loggedIn){
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.send(response);
   } else {
     new User({user_name: loggedIn.username}).fetch().then(function(user){
       if (!user){
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.send(response);
       } else {
         response.isAuthenticated = true;
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.send(response);
       }
     });

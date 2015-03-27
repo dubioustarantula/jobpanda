@@ -31,7 +31,7 @@ var Insight = React.createClass({
 			    </div>
 			    <div className="lineGraph">
 			      <div>Jobs Tracked by Month</div>
-			      <LineChart data= {InsightStore.lineData} width="500" height="200"/>
+			      <LineChart data= {InsightStore.lineData} width="835" height="300"/>
 			    </div>
 			    </div>
 			</div>

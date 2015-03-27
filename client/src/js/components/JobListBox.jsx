@@ -1,4 +1,5 @@
 var React = require('react');
+var Reflux = require('reflux');
 var mui = require('material-ui');
 var LeftNav = mui.LeftNav;
 var JobList = require('./JobList.jsx');
@@ -23,22 +24,15 @@ Modal.setAppElement(appElement);
 Modal.injectCSS();
 
 var JobListBox = React.createClass({
-
-  getInitialState: function() {
-    return {jobs: JobStore.getJobs()};
-  },
-  onChange: function(jobs) {
-    this.setState({
-      jobs: jobs
-    });
-  },
-  componentDidMount: function() {
-    this.unsuscribe = JobStore.listen(this.onChange);
-  },
-  componentWillUnmount: function() {
-    this.unsuscribe();
-  },
-
+  mixins: [Reflux.connect(JobStore, "jobs")],
+  // onChange: function(jobs) {
+  //   this.setState({
+  //     jobs: jobs
+  //   });
+  // },
+  // componentDidMount: function() {
+  //   this.listenTo(JobStore, this.onChange);
+  // },
   render: function() {
     return (
       <div className="job-list-box">
