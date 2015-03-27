@@ -9,6 +9,7 @@
 
 var path = require('path');
 
+<<<<<<< HEAD
 
 var knex = require('knex')({
   client: 'mysql',
@@ -19,10 +20,25 @@ var knex = require('knex')({
     database: process.env.JAWSDB_DB || 'jobpanda',
     charset: 'utf8',
   }
+=======
+/*====== INITIALIZE BOOKSHELF CONNECTION TO POSTGRESS DB ======*/
+
+var knex = require('knex')({
+	client: 'mysql',
+	connection: {
+		host: process.env.JAWSDB_HOST || 'localhost'/*Local Host for testing, ENV host for deployment*/,
+		user: process.env.JAWSDB_USER || 'root',
+		password: process.env.JAWSDB_PW || '',
+		database: process.env.JAWSDB_DB || 'jobpanda',
+    port: process.env.JAWSDB_PORT || 3306, //3306 is default mysql port
+		charset: 'utf8'
+	}
+>>>>>>> master
 });
 
 var db = require('bookshelf')(knex);
 
+<<<<<<< HEAD
 /*====== INITIALIZE BOOKSHELF CONNECTION TO POSTGRESS DB ======*/
 // var db = Bookshelf.initialize({
 // 	client: 'mysql',
@@ -36,6 +52,8 @@ var db = require('bookshelf')(knex);
 // 	}
 // });
 
+=======
+>>>>>>> master
 //Bookshelf has poor out-of-box support for many-to-many relationships
 //registry plug-in is needed for bookshelf defined many-to-many's
 //besides plugin dependency, registry plugin code is not yet implemented in model files
