@@ -50,6 +50,22 @@ html, body {
   background: #FF4081;
 }
 
+.input-field-new {
+  position: relative;
+}
+
+.input-field-new label {
+  color: #384383;
+  position: absolute;
+  top: 0;
+  left: 0.75rem;
+  font-size: 0.8rem;  
+}
+
+.input-field-new input {
+  margin-top: 15px;
+}
+
 
 /*JOB TABLE STYLES*/
 .job-table {
@@ -123,6 +139,7 @@ th::hover {
 .ReactModal__Content{
   width: 50%;
   height: 95%;
+  margin: 0 auto;
 }
 
 .half {
@@ -140,6 +157,15 @@ th::hover {
   font-weight: bold;
 }
 
+.ReactModalPortal h2 {
+  padding: 10px 20px;
+}
+
+.btn-update {
+  margin-left: 20px;
+  background: #384383;
+  color: #fff;
+}
 
 /* GLOBAL STYLES
 -------------------------------------------------- */
