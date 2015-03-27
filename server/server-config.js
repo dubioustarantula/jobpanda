@@ -4,15 +4,9 @@ var express           = require('express'),
     bodyParser        = require('body-parser'),
     passport          = require('passport'),
     // LinkedInStrategy = require('passport-linkedin').Strategy,
-<<<<<<< HEAD
-    User             = require('./models/user.js'),
-    ListingController= require('./controllers/listingController.js')
-    http             = require('http');
-=======
     User              = require('./models/user.js'),
     ListingController = require('./controllers/listingController.js')
     http              = require('http');
->>>>>>> master
 
 /*===================== INITIALIZE EXPRESS =====================*/
 var app = express();
@@ -77,11 +71,7 @@ console.log(__dirname);
 app.post('/api/users/signup', function(req, res, next){
   //create new user session and database entry if username does not already exist
   var latest = req.body;
-<<<<<<< HEAD
   new User({username: req.body.username}).fetch()
-=======
-  new User({user_name: req.body.username}).fetch()
->>>>>>> master
     .then(function(foundUser){
       if (!foundUser){
         new User({
