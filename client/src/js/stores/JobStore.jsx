@@ -9,7 +9,10 @@ var Reactable = require('reactable');
 var unsafe = Reactable.unsafe;
 var FloatingActionButton = mui.FloatingActionButton;
 var EditButton = require('../components/EditButton.jsx');
+var EmployerRating = require('../components/EmployerRating.jsx');
+// var Keys = require('../../../keys.js');
 
+// console.log(Keys.glassdoor_id);
 var _jobData = [
   {
    "id" : 012345,  
@@ -19,7 +22,7 @@ var _jobData = [
    "source_network": "LinkedIn",
    "apply_link":<a className="btn-flat disabled">Applied</a>,
    "favorite": '',
-   "status":  <a className="btn-flat disabled">Interview</a>,
+   "status": 'No Response',
    "date_added": "3/15/15"
 },
   {
@@ -30,7 +33,7 @@ var _jobData = [
    "source_network": "LinkedIn",
    "apply_link":<a className="waves-effect waves-light btn pink">Apply</a>,
    "favorite": <i className="mdi-action-grade icon-medium" />,
-   "status":  <a className="btn-flat disabled">No Response</a>,
+   "status":  'No Response',
    "date_added": "3/18/15"
 },
   {
@@ -41,7 +44,7 @@ var _jobData = [
    "source_network": "LinkedIn",
    "apply_link":<a href="http://makersquare.com" className="waves-effect waves-light btn pink">Apply</a>,
    "favorite": <i className="mdi-action-grade icon-medium" />,
-   "status":  <a className="btn-flat disabled">No Response</a>,
+   "status": 'Interview',
    "date_added": "3/18/15",
 },
 
@@ -89,7 +92,7 @@ var _jobData = [
    "source_network": "LinkedIn",
    "apply_link":<a href="http://google.com" className="waves-effect waves-light btn pink">Apply</a>,
    "favorite": <i className="mdi-action-grade icon-medium" />,
-   "status":  <a className="btn-flat disabled">No Response</a>,
+   "status":  'No Response',
    "date_added": "3/21/15"
 },
 
@@ -131,8 +134,8 @@ var _jobData = [
 
   {
    "id" : 012346,  
-   "title":"Supreme Boss",
-   "company": "Super Startup",
+   "title":"iOS Developer",
+   "company": "Uber",
    "location": "San Francisco, CA",
    "source_network": "AngelList",
    "apply_link":<a href="http://google.com" className="waves-effect waves-light btn pink">Apply</a>,
@@ -180,12 +183,15 @@ var _jobData = [
 
 var _jobs = _jobData.map(function(jobDatum) {
   jobDatum.edit = <EditButton editData= {jobDatum}/>
+  jobDatum.glassdoor_rating = <EmployerRating editData={jobDatum}/>
   return jobDatum;
 })
 
-console.log(_jobs);
+$('label:contains("No Response")').addClass('');
+$('.status:contains("OFFER")').css('color', 'green');
 
-// <select className="browser-default"> <option value="" disabled selected>Choose your option</option><option value="No Response">No Response</option> <option value="Interview">Interview</option> <option value="Rejected">Rejected</option> <option value="Offer">Offer</option> <option value="Pending">Pending</option> </select>
+console.log(_jobs);
+console.log("signal fire 25");
 
 var JobStore = Reflux.createStore({
   init: function(){

@@ -20,46 +20,51 @@ var EditModal = React.createClass({
 	},
 	closeModal: function(){
 	  this.setState({modalIsOpen: false});
+	  console.log("closed");
+	},
+	handleChange: function(event) {
+		this.setState({value: event.target.value});
 	},
 	render: function() {
+		var value = this.state.value;
 		return (
 			<Modal className="ignore-react-onclickoutside" isOpen={this.state.modalIsOpen}>
 			  <h2>Edit Job</h2>
 			  <div className="row">
 			    <form className="col s12">
 			      <div className="row">
-			        <div className="input-field col s6">
-			          <input id="first_name" type="text" className="validate">{this.props.jobDetails.title}</input>
+			        <div className="input-field-new col s6">
+			          <input id="first_name" type="text" className="validate" value={value} onChange={this.handleChange} kplaceholder={this.props.jobDetails.title}></input>
 			          <label for="first_name">Job Title</label>
 			        </div>
-			        <div className="input-field col s6">
-			          <input id="last_name" type="text" className="validate" />
+			        <div className="input-field-new col s6">
+			          <input id="last_name" type="text" className="validate" placeholder={this.props.jobDetails.company}/>
 			          <label for="last_name">Company Name</label>
 			        </div>
 			      </div>
 			      <div className="row">
-			        <div className="input-field col s12">
+			        <div className="input-field-new col s12">
 			          Date Added:
 			          <input id="username" type="date" className="validate" />
 			        </div>
-			        <div className="input-field col s12">
-			          <input id="password" type="text" className="validate" />
+			        <div className="input-field-new col s12">
+			          <input id="password" type="text" className="validate" placeholder={this.props.jobDetails.location}/>
 			          <label for="password">Location</label>
 			        </div>
 			      </div>
 			      <div className="row">
-			        <div className="input-field col s12">
-			          <input id="email" type="text" className="validate" />
+			        <div className="input-field-new col s12">
+			          <input id="email" type="text" className="validate" placeholder={this.props.jobDetails.source_network}/>
 			          <label for="email">Source Network</label>
 			        </div>
-			        <div className="input-field col s12">
-			          <input id="email" type="text" className="validate" />
+			        <div className="input-field-new col s12">
+			          <input id="email" type="text" className="validate" placeholder={this.props.jobDetails.status}/>
 			          <label for="email">Status</label>
 			        </div>
 			      </div>
 			    </form>
 			    </div>
-			  <button onClick={this.closeModal} classNam	e="waves-effect waves-light btn">Save & Close</button>
+			  <button  className="waves-effect waves-light btn btn-update" onClick={this.closeModal}>Update</button>
 			</Modal>
 		);
 	}

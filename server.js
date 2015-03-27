@@ -1,4 +1,5 @@
 var express = require('express');
+var request = require('request');
 
 var app = require('./server/server-config.js');
 
@@ -17,6 +18,12 @@ app.use(express.static(__dirname + '/client/dist'));
 //set app page to /app instead of root /
 app.get('/app', function(req, res){
 	res.sendFile(__dirname + '/client/dist/index.html');
+});
+
+request('http://api.glassdoor.com/api/api.htm?v=1&format=json&t.p=32318&t.k=fkXNoggvsho&userip=173.247.199.46&useragent=&action=employers&q=uber', function(error, response, body){
+	if (!error && response.statusCode === 200) {
+		console.log(body);
+	}
 });
 
 app.listen(port);
