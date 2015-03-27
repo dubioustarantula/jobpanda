@@ -78,6 +78,8 @@ module.exports = {
 								results.push(entry);
 
 								if(results.length === listings.length) {
+									res.header("Access-Control-Allow-Origin", "*");
+									res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 									res.send(200, results);
 								}
 							});
@@ -87,6 +89,8 @@ module.exports = {
 			} else {
 				//if no user entry exists, send 404
 				console.error('No user by that name!');
+				res.header("Access-Control-Allow-Origin", "*");
+				res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 				res.send(404);
 			}
 		});
@@ -131,6 +135,8 @@ module.exports = {
 			} else {
 				//if no user entry, return 404
 				console.error('No user by that name!');
+				res.header("Access-Control-Allow-Origin", "*");
+				res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 				res.send(404);
 			}
 		});
@@ -261,6 +267,8 @@ var newListing = function(reqBody, params, user, res){
 	//Set listing relationship to user then save to DB
 	listing.save().then(function(newListing) {
 		var jobUser = new JobUser({listing_id: listing.get('id'), user_id: user.get('id')}).save();
+		res.header("Access-Control-Allow-Origin", "*");
+		res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 	  res.send(200);
 	});
 };

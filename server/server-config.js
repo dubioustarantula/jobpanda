@@ -12,6 +12,7 @@ var express           = require('express'),
 var app = express();
 app.use(bodyParser());
 
+//Allow CORS
 
 /*================= CONFIGURE PASSPORT/LINKEDIN ================*/
 app.use(session({ secret: "DECEITFUL PANDA IS THE WEB FOR YOUR JOB COB"}));
@@ -56,12 +57,11 @@ app.use(session({ secret: "DECEITFUL PANDA IS THE WEB FOR YOUR JOB COB"}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-//Allow CORS
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   // next();
+// });
 
 console.log(__dirname);
 
@@ -88,6 +88,8 @@ app.post('/api/users/signup', function(req, res, next){
           });
         });
       } else {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.send(418, 'User already exists!');
       }
     });
@@ -130,13 +132,19 @@ app.get('/api/users/checkbookmarklet', function(req, res, next){
   response.isAuthenticated = false;
   var loggedIn = req.session ? !!req.session.user : false;
   if (!loggedIn){
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.send(response);
   } else {
     new User({user_name: loggedIn.username}).fetch().then(function(user){
       if (!user){
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.send(response);
       } else {
         response.isAuthenticated = true;
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.send(response);
       }
     });
