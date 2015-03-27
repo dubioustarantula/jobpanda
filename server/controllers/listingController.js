@@ -4,10 +4,11 @@ var Promise   = require('bluebird'),
 		Position  = require('../models/position.js'),
 		Field     = require('../models/field.js'),
 		Locations = require('../models/location.js'),
-		User      = require('../models/user.js'),
+		User      = require('../models/user.js'),	
 		Source    = require('../models/source.js'),
 		Company   = require('../models/company.js'),
     JobUser   = require('../models/job_user.js'),
+    Industry  = require('../models/industry.js'),
     Listings  = require('../collections/listings.js');
 
 /*==================== EXPORT CONTROLLER RESPONSE ====================*/
@@ -23,14 +24,16 @@ var Promise   = require('bluebird'),
 //It was easier for me to implement callback hell in a limited time.
 //Promises with bluebird may make for cleaner code.
 
+var results = [];	
+
 module.exports = {
 	getListing: function(req, res, next){
 		//set results array to return as response
-		var results = [];
+		// var results = [];
 
 		//Find logged in user here
 
-		var userId = userId || 1;
+		var userId = userId || 1; //this is the guest account
 		var newUser = new User({id: userId});
 
 		//find user entry in database
@@ -39,35 +42,44 @@ module.exports = {
 				var id = user.get('id');
 				//if the user entry exists, grab user id, and run a query in user/listing joins table
 				new JobUser({user_id: id}).fetchAll().then(function(listings){
+					listings = listings.models;
 					//for each listing found, create an object to add to response array
 					for (var i = 0; i < listings.length; i++){
-						var entry = {};
 						var temp = i;
 						//grab listing data based on listing_id
-						new Listing({id: listings.models[i].get('id')}).fetch().then(function(listing){
-							entry.url = listing.get('url');
-							entry.employment_type = listing.get('employment_type');
-							entry.experience = listing.get('experience');
-							entry.salary = listing.get('salary');
-							entry.response_type = listing.get('response_type');
-							//grab data from related tables based on foreign keys in listing model
-							new Field({id: listing.get('id')}).fetch().then(function(field){
-								entry.field = field.get('field_name');
-								new Position({id: listing.get('id')}).fetch().then(function(field){
-									entry.position = field.get('position_name');
-									new Locations({id: listing.get('id')}).fetch().then(function(locations){
-										entry.location = locations.get('city');
-										new Source({id: listing.get('id')}).fetch().then(function(source){
-											entry.source = source.get('source_name');
-											//once all fields in entry object are added, push object to results array
-											results.push(entry);
-											if (temp === listings.length - 1){
-												//send results in response once we finish pushing the last listing info
-												res.send(results);
-											}
-										});
-									});
-								});
+						new Listing({id: listings[i].get('id')}).fetch({
+							withRelated: ['locations', 'positions', 'sources']
+						}).then(function(listing){
+							//get relational data
+							var location = listing.related('locations');
+							var position = listing.related('positions');
+							var source = listing.related('sources');
+							//query companies with reladted industries
+							new Company({id: location.get('company_id')}).fetch({
+								withRelated: ['industries']
+							}).then(function(company){
+								//get related industry
+								var industry = company.related('industries');
+								//set values
+								var entry = {};
+								entry.industry = industry.get('industry');
+								entry.posted = listing.get('post_date');
+								entry.location = location.get('city');
+								entry.url = listing.get('url');
+								entry.employment_type = listing.get('employment_type');
+								entry.experience = listing.get('experience');
+								entry.salary = listing.get('salary');
+								entry.applyLink = listing.get('app_url');
+								entry.position = position.get('position_name');
+								entry.company = company.get('company_name');
+								entry.glassDoor = company.get('glass_door_rating');
+								entry.source = source.get('source_name');
+								
+								results.push(entry);
+
+								if(results.length === listings.length) {
+									res.send(200, results);
+								}
 							});
 						});
 					}
@@ -91,8 +103,9 @@ module.exports = {
 		var newUser = new User({user_name: username});
 		newUser.fetch().then(function(user){
 			if (user){
+				var url = req.body.originURL + req.body.jobURL;
 				//if user entry exists, look for listing entry
-				new Listing({url: req.body.url}).fetch().then(function(foundListing){
+				new Listing({url: url}).fetch().then(function(foundListing){
 					if (foundListing){
 						var userId = user.get('id');
 						var listingId = foundListing.get('id');
@@ -112,8 +125,7 @@ module.exports = {
 					} else {
 						//if listing does not exist, set up job field relationship
 						//callback chain that eventually results in new listing entry
-						console.log('adding this shut');
-						findField(req.body, params, user, res);
+						findPosition(req.body, params, user, res);
 					}
 				});
 			} else {
@@ -138,25 +150,6 @@ module.exports = {
 };
 
 /*========== HELPER FUNCTIONS FOR FINDING/CREATING FOREIGN KEY ENTRIES ===========*/
-
-var findField = function(reqBody, params, user, res){
-	//search for job field entry in table
-	new Field({field_name: reqBody.field}).fetch().then(function(field){
-		//if field exists, add id to params object
-		if (field !== null){
-			params.field_id = field.get('id');
-			//pass params to next related table
-			findPosition(reqBody, params, user, res);
-		} else {
-			//if field doesn't exist, create it and add id to params object
-			new Field({field_name: reqBody.field}).save().then(function(newField){
-				params.field_id = newField.get('id');
-				//pass params to next related table
-				findPosition(reqBody, params, user, res);
-			});
-		}
-	});
-};
 
 var findPosition = function(reqBody, params, user, res){
 	//search for position entry in table
@@ -203,15 +196,15 @@ var findCompany = function(reqBody, loc, user){
 	new Company({company_name: reqBody.company.name}).fetch().then(function(company){
 		//if company exists, add id to location model and save
 		if (company !== null){
-			loc.set('company_id') = company.get('id');
+			loc.set('company_id', company.get('id'));
 			loc.save();
 		} else {
 			//if company doesn't exist, create it and add id to location model and save
 			new Company({company_name: reqBody.company.name}).save().then(function(newCompany){
-				loc.set('company_id') = newCompany.get('id');
+				loc.set('company_id', newCompany.get('id'));
 				loc.save().then(function(){
 					//set company-industry relationship
-					findIndustry(reqBody, company);				
+					findIndustry(reqBody, newCompany);				
 				})
 			});
 		}
@@ -223,12 +216,12 @@ var findIndustry = function(reqBody, company, user){
 	new Industry({industry: reqBody.company.industry}).fetch().then(function(industry){
 		//if industry exists, add id to company model and save
 		if (industry !== null){
-			company.set('industry_id') = industry.get('id');
+			company.set('industry_id', industry.get('id'));
 			company.save();
 		} else {
 			//if industry doesn't exist, create it and add id company model and save
 			new Industry({industry: reqBody.company.industry}).save().then(function(newIndustry){
-				company.set('industry_id') = newIndustry.get('id');
+				company.set('industry_id', newIndustry.get('id'));
 				company.save();
 			});
 		}
@@ -257,11 +250,12 @@ var findSource = function(reqBody, params, user, res){
 //After saving foreign key tables, create and save listing table
 var newListing = function(reqBody, params, user, res){
 	//initialize non-relation params
-	params.url = reqBody.jobURL;
-	params.employment_type = reqBody.company.employmentType;
+	params.url = reqBody.originURL + reqBody.jobURL;
+	params.employment_type = reqBody.employmentType; //change to company.employmentType for bookmarklet
 	params.experience = reqBody.company.experience;
 	params.salary = reqBody.company.salary;
-	params.response_type = reqBody.responseType;
+	params.app_url = reqBody.applyLink;
+	params.post_date = reqBody.dayPosted;
 
 	var listing = new Listing(params);
 	//Set listing relationship to user then save to DB

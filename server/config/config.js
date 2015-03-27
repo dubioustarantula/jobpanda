@@ -1,4 +1,4 @@
-// IMPORTANT
+  // IMPORTANT
 // Bookshelf is pretty inflexible about column names and relationships.
 // We didn't have time to test, but because we used 'tablename_id' instead of
 // just 'id' for the primary key of each table, bookshelf-defined relationships
@@ -46,7 +46,7 @@ db.knex.schema.hasTable('listings').then(function(exists) {
       listing.string('experience', 50);
       listing.string('salary', 100);
       listing.string('response_type', 100);
-      listing.date('post_date');
+      listing.string('post_date');
     }).then(function (table) {
       console.log('Created Table', table);
     });
@@ -76,6 +76,7 @@ db.knex.schema.hasTable('companies').then(function(exists) {
       company.integer('industry_id');
       company.string('url', 255);
       company.string('company_name', 255);
+      company.string('glass_door_rating', 255);
     }).then(function (table) {
       console.log('Created Table', table);
     });
@@ -141,6 +142,7 @@ db.knex.schema.hasTable('users').then(function(exists) {
       user.string('first_name', 255);
       user.string('last_name', 255);
       user.string('token', 255);
+      user.string('linkedin_id', 255);
     }).then(function (table) {
       console.log('Created Table', table);
     });
