@@ -21,7 +21,8 @@ module.exports = function(app, passport) {
   app.get('/login', userController.login);
   app.get('/signin', function(req, res) {
     console.log('trying here');
-    res.render('../../client/src/js/index.html');
+    console.log(__dirname);
+    res.sendFile('/Users/Julia/github/dubioustarantula/jobpanda/client/src/signup.html');
   });
 
 
@@ -36,6 +37,7 @@ module.exports = function(app, passport) {
 
   //LOG OUT
   app.get('/logout', function(req, res) {
+    alert('you are logging out');
     req.logout();
     res.redirect('/');
   });
@@ -56,25 +58,27 @@ module.exports = function(app, passport) {
 
   //LINKEDIN ROUTES
   //route for linkedin authentication and login
-  app.get('/auth/linkedin', passport.authenticate('linkedin', {scope: 'email'}));
+  app.get('/auth/linkedin', passport.authenticate('linkedin', {scope: ['r_emailaddress','r_basicprofile']}));
 
   //handle the callback after linkedin has authenticated the user
   app.get('/auth/linkedin/callback',
     passport.authenticate('linkedin', {
-      successRedirect : '/profile',
+      // successRedirect : '/profile',
       failureRedirect : '/'
-    }));
+    }), function(req, res){
+      res.redirect('/');
+    });
 
 
   //AUTHORIZE (ALREADY LOGGED IN / CONNECTING OTHER SOCIAL ACCOUNT)
   //Linkedin
   //send to Linkedin to do the authentication
-  app.get('/connect/linkedin', passport.authorize('linkedin', {scope: 'email'}));
+  app.get('/connect/linkedin', passport.authorize('linkedin', {scope: ['r_emailaddress','r_basicprofile']}));
 
   //handle the callback after Linkedin has authorized the user
   app.get('/connect/linkedin/callback',
     passport.authorize('linkedin', {
-      successRedirect : '/profile',
+      successRedirect : '/',
       failureRedirect : '/'
     }));
 

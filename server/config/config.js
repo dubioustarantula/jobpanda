@@ -152,6 +152,7 @@ db.knex.schema.hasTable('users').then(function(exists) {
       user.string('first_name', 255);
       user.string('last_name', 255);
       user.string('token', 255);
+      user.string('linkedin_id', 255);
     }).then(function (table) {
       console.log('Created Table', table);
     });
