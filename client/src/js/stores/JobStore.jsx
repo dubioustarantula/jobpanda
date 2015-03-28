@@ -8,207 +8,188 @@ var Toggle = mui.Toggle;
 var Reactable = require('reactable');
 var unsafe = Reactable.unsafe;
 var FloatingActionButton = mui.FloatingActionButton;
+var EditButton = require('../components/EditButton.jsx');
+var EmployerRating = require('../components/EmployerRating.jsx');
+var _ = require('underscore');
+// var Keys = require('../../../keys.js');
 
+// console.log(Keys.glassdoor_id);
+var _jobData = [];
+//   {
+//    "id" : 012345,  
+//    "title":"Class Leader",
+//    "company": "Hack Reactor",
+//    "location": "San Francsico, CA",
+//    "source_network": "LinkedIn",
+//    "apply_link":<a className="btn-flat disabled">Applied</a>,
+//    "favorite": '',
+//    "status": 'No Response',
+//    "date_added": "3/15/15"
+// },
+//   {
+//    "id" : 012346,  
+//    "title":"Lecturer",
+//    "company": "Hack Reactor",
+//    "location": "San Francsico, CA",
+//    "source_network": "LinkedIn",
+//    "apply_link":<a className="waves-effect waves-light btn pink">Apply</a>,
+//    "favorite": <i className="mdi-action-grade icon-medium" />,
+//    "status":  'No Response',
+//    "date_added": "3/18/15"
+// },
+//   {
+//    "id" : 012346,  
+//    "title":"Lecturer",
+//    "company": "Maker Square",
+//    "location": "Austin, TX",
+//    "source_network": "LinkedIn",
+//    "apply_link":<a href="http://makersquare.com" className="waves-effect waves-light btn pink">Apply</a>,
+//    "favorite": <i className="mdi-action-grade icon-medium" />,
+//    "status": 'Interview',
+//    "date_added": "3/18/15",
+// },
 
-var _jobs = [
-  {
-   "id" : 012345,  
-   "title":"Class Lead",
-   "company": "Hack Reactor",
-   "location": "San Francsico, CA",
-   "source_network": "LinkedIn",
-   "apply_link":<a className="btn-flat disabled">Applied</a>,
-   "favorite": '',
-   "status":  <a className="btn-flat disabled">Interview</a>,
-   "date_added": "3/15/15",
-   "edit" : <a onClick={this.openModal} className="btn-floating btn-small waves-effect waves-light orange"><i className="mdi-editor-mode-edit"></i></a>
+//   {
+//    "id" : 012346,  
+//    "title":"Designer",
+//    "company": "Google",
+//    "location": "Mountain View, CA",
+//    "source_network": "LinkedIn",
+//    "apply_link":<a href="http://google.com" className="waves-effect waves-light btn pink">Apply</a>,
+//    "favorite": <i className="mdi-action-grade icon-medium" />,
+//    "status":  <a className="btn-flat disabled">No Response</a>,
+//    "date_added": "3/21/15"
+// },
 
-},
-  {
-   "id" : 012346,  
-   "title":"Lecturer",
-   "company": "Hack Reactor",
-   "location": "San Francsico, CA",
-   "source_network": "LinkedIn",
-   "apply_link":<a className="waves-effect waves-light btn pink">Apply</a>,
-   "favorite": <i className="mdi-action-grade icon-medium" />,
-   "status":  <a className="btn-flat disabled">No Response</a>,
-   "date_added": "3/18/15",
-   "edit" : <a onClick={this.openModal} className="btn-floating btn-small waves-effect waves-light orange"><i className="mdi-editor-mode-edit"></i></a>
+//   {
+//    "id" : 012346,  
+//    "title":"Designer",
+//    "company": "Google",
+//    "location": "Mountain View, CA",
+//    "source_network": "LinkedIn",
+//    "apply_link":<a href="http://google.com" className="waves-effect waves-light btn pink">Apply</a>,
+//    "favorite": <i className="mdi-action-grade icon-medium" />,
+//    "status":  <a className="btn-flat disabled">No Response</a>,
+//    "date_added": "3/21/15"
+// },
 
-},
-  {
-   "id" : 012346,  
-   "title":"Lecturer",
-   "company": "Maker Square",
-   "location": "Austin, TX",
-   "source_network": "LinkedIn",
-   "apply_link":<a href="http://makersquare.com" className="waves-effect waves-light btn pink">Apply</a>,
-   "favorite": <i className="mdi-action-grade icon-medium" />,
-   "status":  <a className="btn-flat disabled">No Response</a>,
-   "date_added": "3/18/15",
-   "edit" : <a onClick={this.openModal} className="btn-floating btn-small waves-effect waves-light orange"><i className="mdi-editor-mode-edit"></i></a>
+//   {
+//    "id" : 012346,  
+//    "title":"Bike Mechanic",
+//    "company": "PostMates",
+//    "location": "San Francisco, CA",
+//    "source_network": "AngelList",
+//    "apply_link":<a href="http://google.com" className="waves-effect waves-light btn pink">Apply</a>,
+//    "favorite": <i className="mdi-action-grade icon-medium" />,
+//    "status":  <a className="btn-flat disabled">No Response</a>,
+//    "date_added": "3/21/15"
+// },
 
-},
+//   {
+//    "id" : 012346,  
+//    "title":"Designer",
+//    "company": "Yahoo",
+//    "location": "Mountain View, CA",
+//    "source_network": "LinkedIn",
+//    "apply_link":<a href="http://google.com" className="waves-effect waves-light btn pink">Apply</a>,
+//    "favorite": <i className="mdi-action-grade icon-medium" />,
+//    "status":  'No Response',
+//    "date_added": "3/21/15"
+// },
 
-  {
-   "id" : 012346,  
-   "title":"Designer",
-   "company": "Google",
-   "location": "Mountain View, CA",
-   "source_network": "LinkedIn",
-   "apply_link":<a href="http://google.com" className="waves-effect waves-light btn pink">Apply</a>,
-   "favorite": <i className="mdi-action-grade icon-medium" />,
-   "status":  <a className="btn-flat disabled">No Response</a>,
-   "date_added": "3/21/15",
-   "edit" : <a onClick={this.openModal} className="btn-floating btn-small waves-effect waves-light orange"><i className="mdi-editor-mode-edit"></i></a>
+//   {
+//    "id" : 012346,  
+//    "title":"Software Engineer",
+//    "company": "Yahoo",
+//    "location": "Mountain View, CA",
+//    "source_network": "LinkedIn",
+//    "apply_link":<a href="http://google.com" className="waves-effect waves-light btn pink">Apply</a>,
+//    "favorite": <i className="mdi-action-grade icon-medium" />,
+//    "status":  <a className="btn-flat disabled">No Response</a>,
+//    "date_added": "3/21/15"
+// },
 
-},
+//   {
+//    "id" : 012346,  
+//    "title":"Designer",
+//    "company": "Microsoft",
+//    "location": "Redmond, WA",
+//    "source_network": "LinkedIn",
+//    "apply_link":<a href="http://google.com" className="waves-effect waves-light btn pink">Apply</a>,
+//    "favorite": <i className="mdi-action-grade icon-medium" />,
+//    "status":  <a className="btn-flat disabled">No Response</a>,
+//    "date_added": "3/21/15"
+// },
 
-  {
-   "id" : 012346,  
-   "title":"Designer",
-   "company": "Google",
-   "location": "Mountain View, CA",
-   "source_network": "LinkedIn",
-   "apply_link":<a href="http://google.com" className="waves-effect waves-light btn pink">Apply</a>,
-   "favorite": <i className="mdi-action-grade icon-medium" />,
-   "status":  <a className="btn-flat disabled">No Response</a>,
-   "date_added": "3/21/15",
-   "edit" : <a onClick={this.openModal} className="btn-floating btn-small waves-effect waves-light orange"><i className="mdi-editor-mode-edit"></i></a>
+//   {
+//    "id" : 012346,  
+//    "title":"Janitor",
+//    "company": "Google",
+//    "location": "Mountain View, CA",
+//    "source_network": "LinkedIn",
+//    "apply_link":<a className="btn-flat disabled">Applied</a>,
+//    "favorite": <i className="mdi-action-grade icon-medium" />,
+//    "status":  <a className="btn-flat disabled">No Response</a>,
+//    "date_added": "3/21/15"
+// },
 
-},
+//   {
+//    "id" : 012346,  
+//    "title":"iOS Developer",
+//    "company": "Uber",
+//    "location": "San Francisco, CA",
+//    "source_network": "AngelList",
+//    "apply_link":<a href="http://google.com" className="waves-effect waves-light btn pink">Apply</a>,
+//    "favorite": <i className="mdi-action-grade icon-medium" />,
+//    "status":  <a className="btn-flat disabled">No Response</a>,
+//    "date_added": "3/21/15"
+// },
 
-  {
-   "id" : 012346,  
-   "title":"Bike Mechanic",
-   "company": "PostMates",
-   "location": "San Francisco, CA",
-   "source_network": "AngelList",
-   "apply_link":<a href="http://google.com" className="waves-effect waves-light btn pink">Apply</a>,
-   "favorite": <i className="mdi-action-grade icon-medium" />,
-   "status":  <a className="btn-flat disabled">No Response</a>,
-   "date_added": "3/21/15",
-   "edit" : <a onClick={this.openModal} className="btn-floating btn-small waves-effect waves-light orange"><i className="mdi-editor-mode-edit"></i></a>
+//   {
+//    "id" : 012346,  
+//    "title":"Designer",
+//    "company": "Apple",
+//    "location": "Cupertino, CA",
+//    "source_network": "LinkedIn",
+//    "apply_link":<a className="btn-flat disabled">Applied</a>,
+//    "favorite": <i className="mdi-action-grade icon-medium" />,
+//    "status":  <a className="btn-flat disabled">No Response</a>,
+//    "date_added": "3/19/15"
+// },
 
-},
+//   {
+//    "id" : 012346,  
+//    "title":"Executive Assistant",
+//    "company": "Google",
+//    "location": "Mountain View, CA",
+//    "source_network": "AngelList",
+//    "apply_link":<a className="btn-flat disabled">Applied</a>,
+//    "favorite": <i className="mdi-action-grade icon-medium" />,
+//    "status":  <a className="btn-flat disabled">Rejected</a>,
+//    "date_added": "3/21/15"
+// },
 
-  {
-   "id" : 012346,  
-   "title":"Designer",
-   "company": "Yahoo",
-   "location": "Mountain View, CA",
-   "source_network": "LinkedIn",
-   "apply_link":<a href="http://google.com" className="waves-effect waves-light btn pink">Apply</a>,
-   "favorite": <i className="mdi-action-grade icon-medium" />,
-   "status":  <a className="btn-flat disabled">No Response</a>,
-   "date_added": "3/21/15",
-   "edit" : <a onClick={this.openModal} className="btn-floating btn-small waves-effect waves-light orange"><i className="mdi-editor-mode-edit"></i></a>
+//   {
+//    "id" : 012346,  
+//    "title":"Designer",
+//    "company": "Google",
+//    "location": "Mountain View, CA",
+//    "source_network": "Monster",
+//    "apply_link":<a className="btn-flat disabled">Applied</a>,
+//    "favorite": <i className="mdi-action-grade icon-medium" />,
+//    "status":  <a className="btn-flat disabled">Offer</a>,
+//    "date_added": "3/21/15"
+// }
+// ];
 
-},
+// var _jobs = _jobData.map(function(jobDatum) {
+//   jobDatum.edit = <EditButton editData= {jobDatum}/>
+//   jobDatum.glassdoor_rating = <EmployerRating editData={jobDatum}/>
+//   return jobDatum;
+// })
 
-  {
-   "id" : 012346,  
-   "title":"Software Engineer",
-   "company": "Yahoo",
-   "location": "Mountain View, CA",
-   "source_network": "LinkedIn",
-   "apply_link":<a href="http://google.com" className="waves-effect waves-light btn pink">Apply</a>,
-   "favorite": <i className="mdi-action-grade icon-medium" />,
-   "status":  <a className="btn-flat disabled">No Response</a>,
-   "date_added": "3/21/15",
-   "edit" : <a onClick={this.openModal} className="btn-floating btn-small waves-effect waves-light orange"><i className="mdi-editor-mode-edit"></i></a>
-
-},
-
-  {
-   "id" : 012346,  
-   "title":"Designer",
-   "company": "Microsoft",
-   "location": "Redmond, WA",
-   "source_network": "LinkedIn",
-   "apply_link":<a href="http://google.com" className="waves-effect waves-light btn pink">Apply</a>,
-   "favorite": <i className="mdi-action-grade icon-medium" />,
-   "status":  <a className="btn-flat disabled">No Response</a>,
-   "date_added": "3/21/15",
-   "edit" : <a onClick={this.openModal} className="btn-floating btn-small waves-effect waves-light orange"><i className="mdi-editor-mode-edit"></i></a>
-
-},
-
-  {
-   "id" : 012346,  
-   "title":"Janitor",
-   "company": "Google",
-   "location": "Mountain View, CA",
-   "source_network": "LinkedIn",
-   "apply_link":<a className="btn-flat disabled">Applied</a>,
-   "favorite": <i className="mdi-action-grade icon-medium" />,
-   "status":  <a className="btn-flat disabled">No Response</a>,
-   "date_added": "3/21/15",
-   "edit" : <a onClick={this.openModal} className="btn-floating btn-small waves-effect waves-light orange"><i className="mdi-editor-mode-edit"></i></a>
-
-},
-
-  {
-   "id" : 012346,  
-   "title":"Supreme Boss",
-   "company": "Super Startup",
-   "location": "San Francisco, CA",
-   "source_network": "AngelList",
-   "apply_link":<a href="http://google.com" className="waves-effect waves-light btn pink">Apply</a>,
-   "favorite": <i className="mdi-action-grade icon-medium" />,
-   "status":  <a className="btn-flat disabled">No Response</a>,
-   "date_added": "3/21/15",
-   "edit" : <a onClick={this.openModal} className="btn-floating btn-small waves-effect waves-light orange"><i className="mdi-editor-mode-edit"></i></a>
-
-},
-
-  {
-   "id" : 012346,  
-   "title":"Designer",
-   "company": "Apple",
-   "location": "Cupertino, CA",
-   "source_network": "LinkedIn",
-   "apply_link":<a className="btn-flat disabled">Applied</a>,
-   "favorite": <i className="mdi-action-grade icon-medium" />,
-   "status":  <a className="btn-flat disabled">No Response</a>,
-   "date_added": "3/19/15",
-   "edit" : <a onClick={this.openModal} className="btn-floating btn-small waves-effect waves-light orange"><i className="mdi-editor-mode-edit"></i></a>
-
-},
-
-  {
-   "id" : 012346,  
-   "title":"Executive Assistant",
-   "company": "Google",
-   "location": "Mountain View, CA",
-   "source_network": "AngelList",
-   "apply_link":<a className="btn-flat disabled">Applied</a>,
-   "favorite": <i className="mdi-action-grade icon-medium" />,
-   "status":  <a className="btn-flat disabled">Rejected</a>,
-   "date_added": "3/21/15",
-   "edit" : <a onClick={this.openModal} className="btn-floating btn-small waves-effect waves-light orange"><i className="mdi-editor-mode-edit"></i></a>
-
-},
-
-  {
-   "id" : 012346,  
-   "title":"Designer",
-   "company": "Google",
-   "location": "Mountain View, CA",
-   "source_network": "Monster",
-   "apply_link":<a className="btn-flat disabled">Applied</a>,
-   "favorite": <i className="mdi-action-grade icon-medium" />,
-   "status":  <a className="btn-flat disabled">Offer</a>,
-   "date_added": "3/21/15",
-   "edit" : <a onClick={this.openModal} className="btn-floating btn-small waves-effect waves-light orange"><i className="mdi-editor-mode-edit"></i></a>
-
-}
-
-
-];
-
-// <select className="browser-default"> <option value="" disabled selected>Choose your option</option><option value="No Response">No Response</option> <option value="Interview">Interview</option> <option value="Rejected">Rejected</option> <option value="Offer">Offer</option> <option value="Pending">Pending</option> </select>
+$('label:contains("No Response")').addClass('');
+$('.status:contains("OFFER")').css('color', 'green');
 
 var JobStore = Reflux.createStore({
   init: function(){
@@ -223,32 +204,34 @@ var JobStore = Reflux.createStore({
         type: "GET",
         url: '/api/listings',
       }).done(function(data){
-          console.log(data);
-          _jobs = [data]; //push data to store
-          context.trigger(_jobs);
+        _.each(data, function(element) {
+          element.edit = <EditButton editData= {element}/>
+          element.glassdoor_rating = <EmployerRating editData={element}/>
+          _jobData.push(element);
+        });
+        context.trigger(_jobData);
       });
   },
   pushChanges: function() {
       var context = this;
       $.ajax({
         type: "POST",
-        data: _jobs,
+        data: _jobData,
         url: '/api/listings',
       }).done(function(data){
-          console.log(data);
-          context.trigger(_jobs);
+          context.trigger(_jobData);
       });
   },
   onCreate: function(job) {
-    _jobs.push(job);
-    this.trigger(_jobs);
+    _jobData.push(job);
+    this.trigger(_jobData);
     this.pushChanges();
   },
   onEdit: function(job) {
-    for (var i = 0; i < _jobs.length; i++) {
-      if(_jobs[i]._id === job._id) {
-        _jobs[i].mutable = job.mutable;
-        this.trigger(_jobs);
+    for (var i = 0; i < _jobData.length; i++) {
+      if(_jobData[i]._id === job._id) {
+        _jobData[i].mutable = job.mutable;
+        this.trigger(_jobData);
         break;
       }
     }
@@ -257,14 +240,14 @@ var JobStore = Reflux.createStore({
 
   getJobs: function() {
     this.load(); //req to /api/listings
-    return _jobs;
+    return _jobData;
   },
 
   getJob: function(id) {
-    for (var i = 0; i < _jobs.length; i++) {
-      if(_jobs._id === id) {
-        return jobs[i];
-      }
+    for (var i = 0; i < _jobData.length; i++) {
+      if(_jobData._id === id) {
+        return _jobData[i];
+      } 
     }
   }
 });

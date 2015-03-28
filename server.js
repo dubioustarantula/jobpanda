@@ -57,6 +57,8 @@ app.get('/', function(req, res){
 
 set app page to /app instead of root /
 app.get('/app', function(req, res){
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 	res.sendFile(__dirname + '/client/dist/index.html');
 });
 */
