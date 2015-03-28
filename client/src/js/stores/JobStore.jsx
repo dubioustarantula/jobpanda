@@ -207,6 +207,7 @@ var JobStore = Reflux.createStore({
         _.each(data, function(element) {
           element.edit = <EditButton editData= {element}/>
           element.glassdoor_rating = <EmployerRating editData={element}/>
+          element.status = "Applied";
           _jobData.push(element);
         });
         context.trigger(_jobData);
