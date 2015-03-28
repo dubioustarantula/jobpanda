@@ -53,6 +53,8 @@ module.exports = function(passport) {
         //asynchronous
         //new User won't fire until we have all our data back from Linkedin
         process.nextTick(function() {
+
+            if (!req.user) {
             //find the user in the database based on their linkedin id
             new User({'linkedin_id' : profile.id}).fetch().then(function(user) {
                 //if there is an error, stop everything and return that
@@ -77,7 +79,7 @@ module.exports = function(passport) {
                       console.log("WE DID IT")
                       console.log(model);
                       done();
-                    })
+                    });
 
                     //if there is no user found with that linkedin id, create them
                     // var newUser = new User();
@@ -112,6 +114,20 @@ module.exports = function(passport) {
                     // console.log('we here');
                 }
                 });
+            } else {
+                var user = req.user;
+                user.linkedin_id = profile.id;
+                user.token = token;
+                user.first_name = profile.name.givenName;
+                user.last_name = profile.name.familyName;
+
+                new User(newUser).save().then(function(model){
+                      console.log("WE DID IT")
+                      console.log(model);
+                      done();
+                    });
+
+            }
         });
     }));
 };

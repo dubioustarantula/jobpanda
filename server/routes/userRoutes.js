@@ -10,7 +10,7 @@ var isLoggedIn = function(req, res, next) {
   }
 
   //if they aren't redirect them to the home page
-  res.redirect('/');
+  res.redirect('/login');
 };
 
 
@@ -21,8 +21,11 @@ module.exports = function(app, passport) {
   app.get('/login', userController.login);
   app.get('/signin', function(req, res) {
     console.log('trying here');
-    console.log(__dirname);
-    res.sendFile('/Users/Julia/github/dubioustarantula/jobpanda/client/src/signup.html');
+    console.log('dirname', __dirname);
+    res.redirect('/login');
+
+    //res.sendFile(path, {'root': '/../../client/src/signup.html'});
+    //path.resolve(__dirname + '/../../client/src/signup.html');
   });
 
 
@@ -30,26 +33,24 @@ module.exports = function(app, passport) {
   //we will want this protected so you have to be logged in to visit
   //we will use route middleware to verify this (the isLoggedIn function)
   app.get('/profile', isLoggedIn, function(req, res) {
-    res.render('../../client/src/js/landing.html', {
+    res.render('../../client/src/js/login.html', {
       user: req.user //get the user out of session and pass to template
     });
   });
 
   //LOG OUT
   app.get('/logout', function(req, res) {
-    alert('you are logging out');
     req.logout();
-    res.redirect('/');
+    res.redirect('/signin');
   });
 
-  //process the signup form
   app.post('/signup', passport.authenticate('local-signup', {
     successRedirect : '/profile', //redirect to the secure profile section
     failureRedirect : '/signup', //redirect back to the signup page if there is an error
     failureFlash : true //allow flash messages
   }));
 
-  //process the login form
+
   app.post('/login', passport.authenticate('local-login', {
     successRedirect : '/profile', //redirect to the secure profile section
     failureRedirect : '/login', //redirect back to the signup page if there is an error

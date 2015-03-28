@@ -42,6 +42,7 @@ module.exports = {
 
 
 	signin: function(req, res, next){
+    console.log('SIGN IN');
 		new User({username: req.body.username}).fetch()
 		.then(function(foundUser){
 			if (!foundUser){
@@ -56,22 +57,17 @@ module.exports = {
 	},
 
 	login: function(req, res, next){
-	  var username = req.body.username;
-	  var password = req.body.password;
+     res.set('Content-Type', 'text/html');
 
-	  new User({username: username}).fetch().then(function(user){
-	    if( !user ){
-	      res.redirect('/');
-	    } else {
-	      user.comparePassword(password, function(match){
-	        if(match) {
+        fs.readFile(__dirname + '/../../client/src/signup.html', function(err, data) {
+          if (err) {
+            console.log('err: ' + err);
+            res.send('<html><head/><body>empty: ' + __dirname + '</body></html>');
+            return;
+          }
 
-	        } else {
-	          res.redirect('/')
-	        }
-	      });
-	    }
-	  });
+          res.send(data);
+        });
 	},
 
 	logout: function(req, res, next){

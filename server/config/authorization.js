@@ -11,7 +11,7 @@ module.exports = {
     'linkedinAuth' : {
         'consumerKey' : consumerKey,
         'consumerSecret' : consumerSecret,
-        'callbackURL' : 'http://127.0.0.1:8000/auth/linkedin/callback'
+        'callbackURL' : 'http://jpanda.herokuapp.com/auth/linkedin/callback'
 }
 };
 
