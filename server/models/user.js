@@ -4,6 +4,7 @@ var db 				  = require('../config/config'),
     ListingUser = require('./job_user'),
     Listings 	  = require('./listing');
 
+
 /*============== SET SCHEMA RELATIONSHIPS ==============*/
 var User = db.Model.extend({
 	tableName: 'users',
@@ -23,6 +24,7 @@ var User = db.Model.extend({
         this.set('password', hash);
       });
   },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   */
@@ -60,6 +62,8 @@ var User = db.Model.extend({
       });
 >>>>>>> (refactor) Refactor code in user.js to not uses Promises
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
 =======
   },
   */

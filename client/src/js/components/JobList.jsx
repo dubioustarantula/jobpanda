@@ -34,10 +34,9 @@ var JobList = React.createClass({
           {key: 'location', label: 'Location'},
           {key: 'posted', label: 'Date Added'},
           {key: 'source', label: 'Source Network'},
-          {key: 'apply_link onClick={this.handleClick}', label: 'Apply Link'},
+          {key: 'url', label: 'Apply Link'},
           {key: 'status', label: 'Status'},
           {key: 'glassdoor_rating', label: 'Rating'},
-          {key: 'favorite', label: 'Favorite'},
           {key: 'edit', label: 'Edit / Details'}
         ]}
         />

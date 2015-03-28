@@ -210,6 +210,10 @@ var JobStore = Reflux.createStore({
 <<<<<<< HEAD
 =======
           element.status = "Applied";
+<<<<<<< HEAD
+>>>>>>> master
+=======
+          element.url = "Apply"
 >>>>>>> master
           _jobData.push(element);
         });
