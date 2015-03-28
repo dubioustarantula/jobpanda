@@ -18,6 +18,7 @@ module.exports = function(app, passport) {
   
   //HOME PAGE
   app.get('/', userController.index);
+  app.get('/landing', userController.landing);
   app.get('/login', userController.login);
   app.get('/signin', function(req, res) {
     console.log('trying here');

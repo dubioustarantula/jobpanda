@@ -14,7 +14,7 @@ module.exports = {
     index: function(req, res) {
         res.set('Content-Type', 'text/html');
 
-        fs.readFile(__dirname + '/../../client/src/landing.html', function(err, data) {
+        fs.readFile(__dirname + '/../../client/src/index.html', function(err, data) {
         	if (err) {
         		console.log('err: ' + err);
         		res.send('<html><head/><body>empty: ' + __dirname + '</body></html>');
@@ -22,6 +22,20 @@ module.exports = {
         	}
 
         	res.send(data);
+        });
+    },
+
+    landing: function(req, res) {
+    res.set('Content-Type', 'text/html');
+
+        fs.readFile(__dirname + '/../../client/src/landing.html', function(err, data) {
+          if (err) {
+            console.log('err: ' + err);
+            res.send('<html><head/><body>empty: ' + __dirname + '</body></html>');
+            return;
+          }
+
+          res.send(data);
         });
     },
      
