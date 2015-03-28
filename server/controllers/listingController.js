@@ -24,12 +24,10 @@ var Promise   = require('bluebird'),
 //It was easier for me to implement callback hell in a limited time.
 //Promises with bluebird may make for cleaner code.
 
-var results = [];	
-
 module.exports = {
 	getListing: function(req, res, next){
 		//set results array to return as response
-		// var results = [];
+		var results = [];
 
 		//Find logged in user here
 
@@ -58,7 +56,7 @@ module.exports = {
 							new Company({id: location.get('company_id')}).fetch({
 								withRelated: ['industries']
 							}).then(function(company){
-								//get related industry
+								//get relational data
 								var industry = company.related('industries');
 								//set values
 								var entry = {};
@@ -74,13 +72,11 @@ module.exports = {
 								entry.company = company.get('company_name');
 								entry.glassDoor = company.get('glass_door_rating');
 								entry.source = source.get('source_name');
-								
+								//push to results
 								results.push(entry);
 
 								if(results.length === listings.length) {
-									res.header("Access-Control-Allow-Origin", "*");
-									res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-									res.send(200, results);
+									res.status(200).send(results);
 								}
 							});
 						});
@@ -89,8 +85,6 @@ module.exports = {
 			} else {
 				//if no user entry exists, send 404
 				console.error('No user by that name!');
-				res.header("Access-Control-Allow-Origin", "*");
-				res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 				res.send(404);
 			}
 		});
@@ -135,8 +129,6 @@ module.exports = {
 			} else {
 				//if no user entry, return 404
 				console.error('No user by that name!');
-				res.header("Access-Control-Allow-Origin", "*");
-				res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 				res.send(404);
 			}
 		});
