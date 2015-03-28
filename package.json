@@ -4,7 +4,6 @@
   "description": "job application management app",
   "main": "server.js",
   "scripts": {
-    "test": "jest",
     "postinstall": "gulp production"
   },
   "repository": {
