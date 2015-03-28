@@ -1,6 +1,6 @@
 /*================ REQUIRE DEPENDENCIES ================*/
 var db 				= require('../config/config'),
-    Listings 	= require('./listing');
+    Listings 	    = require('./listing');
 
 /*============== SET SCHEMA RELATIONSHIPS ==============*/
 var Field = db.Model.extend({
