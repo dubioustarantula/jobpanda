@@ -24,6 +24,7 @@ var User = db.Model.extend({
       });
   },
 <<<<<<< HEAD
+<<<<<<< HEAD
   */
   generateHash: function(password) {
     console.log('generating hash');
@@ -58,6 +59,8 @@ var User = db.Model.extend({
         this.set('password', hash);
       });
 >>>>>>> (refactor) Refactor code in user.js to not uses Promises
+<<<<<<< HEAD
+=======
   },
   */
   // generateHash: function(password) {
