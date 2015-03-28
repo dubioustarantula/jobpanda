@@ -25,14 +25,6 @@ Modal.injectCSS();
 
 var JobListBox = React.createClass({
   mixins: [Reflux.connect(JobStore, "jobs")],
-  // onChange: function(jobs) {
-  //   this.setState({
-  //     jobs: jobs
-  //   });
-  // },
-  // componentDidMount: function() {
-  //   this.listenTo(JobStore, this.onChange);
-  // },
   render: function() {
     return (
       <div className="job-list-box">

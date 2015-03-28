@@ -10,6 +10,7 @@ var unsafe = Reactable.unsafe;
 var FloatingActionButton = mui.FloatingActionButton;
 var EditButton = require('../components/EditButton.jsx');
 var EmployerRating = require('../components/EmployerRating.jsx');
+var _ = require('underscore');
 // var Keys = require('../../../keys.js');
 
 // console.log(Keys.glassdoor_id);
@@ -181,16 +182,14 @@ var _jobData = [];
 // }
 // ];
 
-var _jobs = _jobData.map(function(jobDatum) {
-  jobDatum.edit = <EditButton editData= {jobDatum}/>
-  jobDatum.glassdoor_rating = <EmployerRating editData={jobDatum}/>
-  return jobDatum;
-})
+// var _jobs = _jobData.map(function(jobDatum) {
+//   jobDatum.edit = <EditButton editData= {jobDatum}/>
+//   jobDatum.glassdoor_rating = <EmployerRating editData={jobDatum}/>
+//   return jobDatum;
+// })
 
 $('label:contains("No Response")').addClass('');
 $('.status:contains("OFFER")').css('color', 'green');
-
-console.log("signal fire 27");
 
 var JobStore = Reflux.createStore({
   init: function(){
@@ -205,31 +204,34 @@ var JobStore = Reflux.createStore({
         type: "GET",
         url: '/api/listings',
       }).done(function(data){
-          console.log('this is data', data);
-          _jobs = [data]; //push data to store
-          context.trigger(_jobs);
+        _.each(data, function(element) {
+          element.edit = <EditButton editData= {element}/>
+          element.glassdoor_rating = <EmployerRating editData={element}/>
+          _jobData.push(element);
+        });
+        context.trigger(_jobData);
       });
   },
   pushChanges: function() {
       var context = this;
       $.ajax({
         type: "POST",
-        data: _jobs,
+        data: _jobData,
         url: '/api/listings',
       }).done(function(data){
-          context.trigger(_jobs);
+          context.trigger(_jobData);
       });
   },
   onCreate: function(job) {
-    _jobs.push(job);
-    this.trigger(_jobs);
+    _jobData.push(job);
+    this.trigger(_jobData);
     this.pushChanges();
   },
   onEdit: function(job) {
-    for (var i = 0; i < _jobs.length; i++) {
-      if(_jobs[i]._id === job._id) {
-        _jobs[i].mutable = job.mutable;
-        this.trigger(_jobs);
+    for (var i = 0; i < _jobData.length; i++) {
+      if(_jobData[i]._id === job._id) {
+        _jobData[i].mutable = job.mutable;
+        this.trigger(_jobData);
         break;
       }
     }
@@ -238,13 +240,13 @@ var JobStore = Reflux.createStore({
 
   getJobs: function() {
     this.load(); //req to /api/listings
-    return _jobs;
+    return _jobData;
   },
 
   getJob: function(id) {
-    for (var i = 0; i < _jobs.length; i++) {
-      if(_jobs._id === id) {
-        return jobs[i];
+    for (var i = 0; i < _jobData.length; i++) {
+      if(_jobData._id === id) {
+        return _jobData[i];
       } 
     }
   }

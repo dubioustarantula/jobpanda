@@ -8,23 +8,32 @@ var unsafe = Reactable.unsafe;
 
 var menuItems = {};
 var JobList = React.createClass({
-  componentWillMount: function() {
-    
+  getInitialState: function() {
+    return {
+      jobs: this.props.jobs
+    }
+  },
+  handleClick: function() {
+      
   },
   render: function(){
-    console.log('this.props in job list', this.props.jobs);
+    var jobs = this.props.jobs;
+    if(!jobs){
+      jobs =[];
+    }
+    console.log('jobs', jobs);
     return (
         <Table 
         className="job-table striped table" 
-        data={this.props.jobs}
+        data={jobs}
         sortable={true}
         filterable={['location', 'company', 'title', 'source network', 'apply link', 'rating', 'favorite', 'date added', 'status']}
         columns={[
-          {key: 'title', label: 'Title'},
+          {key: 'position', label: 'Title'},
           {key: 'company', label: 'Company'}, 
           {key: 'location', label: 'Location'},
-          {key: 'date_added', label: 'Date Added'},
-          {key: 'source_network', label: 'Source Network'},
+          {key: 'posted', label: 'Date Added'},
+          {key: 'source', label: 'Source Network'},
           {key: 'apply_link onClick={this.handleClick}', label: 'Apply Link'},
           {key: 'status', label: 'Status'},
           {key: 'glassdoor_rating', label: 'Rating'},

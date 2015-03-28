@@ -18,39 +18,11 @@ var JobStore = require('./stores/JobStore.jsx');
 injectTapEventPlugin();
 
 var Main = React.createClass({
-  getInitialState: function() {
-    return ({
-      jobs: []
-    })
-  },
-  componentWillMount: function() {
-    console.log('I am here');
-      $.ajax({
-        type: "GET",
-        url: '/api/listings',
-        success: function(data){
-          console.log('I did it', data);
-        },
-        error: function(){
-          console.log('I fail it');
-        }
-      });
-      // }).done(function(data){
-      //   console.log('I am having data', data);
-      //   this.setState({
-      //     jobs: data
-      //   })
-      // }.bind(this))
-      // .error(function(){
-      //   console.log('I fail you');
-      // });
-  },
   render: function(){
-    console.log('I am in render');
     return (
         <div className="full">
           <NavBar />
-          <JobListBox jobs={this.state.jobs}/>
+          <JobListBox />
         </div>
       );
   }
